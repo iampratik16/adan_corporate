@@ -4,11 +4,11 @@
     "standard": 12
   },
   "spent": {
-    "stills": 11,
-    "fast": 0,
+    "stills": 14,
+    "fast": 2,
     "standard": 0
   },
-  "costEstimateUsd": 0,
+  "costEstimateUsd": 1.92,
   "entries": [
     {
       "shot": 2,
@@ -206,6 +206,102 @@
       },
       "timestamp": "2026-09-18T10:48:31.754Z",
       "file": "media/originals/hero-stills/hero-07-material-take1.png",
+      "kept": true
+    },
+    {
+      "shot": 7,
+      "id": "hero-07-material",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "Extreme close detail of the junction where a brushed brass edge meets fluted glass and honed pale stone. Very shallow depth of field. A low warm highlight travels along the metal. Entirely abstract, no human presence, no context. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:49:13.445Z",
+      "file": "media/originals/hero-stills/hero-07-material-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 8,
+      "id": "hero-08-return",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "The same tall stone-and-glass office lobby as the reference image, the same angle and the same framing, with the low dawn sun raking across the pale limestone floor. A single anonymous figure is crossing the frame in soft motion blur. Symmetrical, strong verticals. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:49:57.147Z",
+      "file": "media/originals/hero-stills/hero-08-return-take1.png",
+      "kept": true
+    },
+    {
+      "shot": 8,
+      "id": "hero-08-return",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "The same tall stone-and-glass office lobby as the reference image, the same angle and the same framing, with the low dawn sun raking across the pale limestone floor. A single anonymous figure is crossing the frame in soft motion blur. Symmetrical, strong verticals. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:50:42.774Z",
+      "file": "media/originals/hero-stills/hero-08-return-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 1,
+      "id": "hero-01-lobby",
+      "kind": "film",
+      "tier": "fast",
+      "model": "veo-3.1-fast-generate-001",
+      "prompt": "The camera is locked off and does not move. Two or three anonymous figures walk slowly across the frame and out of it, in soft motion blur, never facing camera, never in focus. Reflections drift slowly across the tall glazing. A shaft of low dawn light creeps almost imperceptibly across the pale stone floor. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. No camera movement beyond what is described, no zoom, no cuts, no faces in focus, no text. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "aspectRatio": "16:9",
+        "durationSeconds": 8,
+        "numberOfVideos": 1,
+        "generateAudio": false,
+        "resolution": "1080p",
+        "personGeneration": "allow_adult"
+      },
+      "timestamp": "2026-09-18T10:53:20.292Z",
+      "file": "media/originals/hero-film/fast/hero-01-lobby.mp4",
+      "seconds": 8,
+      "costEstimateUsd": 0.96,
+      "kept": false
+    },
+    {
+      "shot": 2,
+      "id": "hero-02-glazing",
+      "kind": "film",
+      "tier": "fast",
+      "model": "veo-3.1-fast-generate-001",
+      "prompt": "The camera is locked off. Reflections of cloud drift slowly across the panes. A single out-of-focus figure crosses behind one pane and leaves. Almost still. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. No camera movement beyond what is described, no zoom, no cuts, no faces in focus, no text. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "aspectRatio": "16:9",
+        "durationSeconds": 8,
+        "numberOfVideos": 1,
+        "generateAudio": false,
+        "resolution": "1080p",
+        "personGeneration": "allow_adult"
+      },
+      "timestamp": "2026-09-18T10:55:08.564Z",
+      "file": "media/originals/hero-film/fast/hero-02-glazing.mp4",
+      "seconds": 8,
+      "costEstimateUsd": 0.96,
       "kept": false
     }
   ]

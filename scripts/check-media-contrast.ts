@@ -121,8 +121,13 @@ async function main(): Promise<void> {
   // that never reaches the screen: measuring against it fails text that is in
   // fact legible. Swapping the frame into the poster <img> and re-shooting keeps
   // the scrims, the header and the page's own colour management in the result.
-  const qc = path.join(ROOT, 'media/qc/hero-film');
-  if (existsSync(qc)) {
+  // Both tiers: the 60-second film first, because the brief sets the scrim from
+  // the brightest frame of the film, and the 8-second loop, which is what most
+  // visitors actually see.
+  for (const dir of ['media/qc/hero-film-60', 'media/qc/hero-film']) {
+    const qc = path.join(ROOT, dir);
+    if (!existsSync(qc)) continue;
+    const tier = dir.endsWith('-60') ? 'film' : 'loop';
     for (const file of (await readdir(qc)).filter((f) => f.endsWith('.jpg'))) {
       const uri = `data:image/jpeg;base64,${(
         await sharp(path.join(qc, file)).resize(width, HEIGHT, { fit: 'cover' }).jpeg().toBuffer()
@@ -140,7 +145,7 @@ async function main(): Promise<void> {
         await img.decode().catch(() => {});
       }, uri);
       backgrounds.push({
-        name: `film ${file.replace('.jpg', '')}`,
+        name: `${tier} ${file.replace('.jpg', '')}`,
         buffer: await capture(page, true),
       });
     }

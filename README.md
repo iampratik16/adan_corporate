@@ -99,12 +99,24 @@ Credentials**. No API key is ever used or stored.
 gcloud auth application-default login
 export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
 
-pnpm media:generate                  # everything not already generated
+pnpm media:generate                  # stills and short films for the pages
 pnpm media:generate hero-still       # one shot by id
-pnpm media:generate --films          # films only
 pnpm media:process                   # grade, encode, write content/media.ts
 npx tsx scripts/media/portraits.ts   # the real headshots (no model involved)
 ```
+
+The 60-second hero film has its own pipeline, described in `docs/HERO-FILM.md`:
+
+```bash
+npx tsx scripts/media/generate-hero.ts --stills        # the 7 anchor stills
+npx tsx scripts/media/generate-hero.ts --draft         # all 8 shots, fast tier
+npx tsx scripts/media/generate-hero.ts --final 1 4 6 8 # approved shots, standard tier
+npx tsx scripts/media/assemble-hero.ts                 # grade, crossfade, encode, QC frames
+```
+
+Approve a take by copying it to its bare id, e.g.
+`cp hero-05-window-take2.png hero-05-window.png`. The assembler reads the bare names, so an
+unapproved shot can never reach the film.
 
 `scripts/media/shots.ts` holds the shot list and every prompt, including the house look appended to
 all of them. `scripts/media/manifest.json` records every call: model, prompt, parameters, timestamp

@@ -4,6 +4,8 @@ import { insights } from '@content/insights';
 import { media } from '@content/media';
 import { offices, partnerCities } from '@content/offices';
 import { people } from '@content/people';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { pillars } from '@content/pillars';
 import { site } from '@content/site';
 import { transactions } from '@content/transactions';
@@ -25,6 +27,16 @@ export const metadata: Metadata = {
   description: site.description,
   alternates: { canonical: '/' },
 };
+
+/**
+ * The 60-second film is an optional tier. Until it has been generated and
+ * assembled, the hero simply loops the 8-second shot, which is what most
+ * visitors see anyway. Checked at build time so no client ever requests a file
+ * that is not there.
+ */
+const FULL_FILM = existsSync(path.join(process.cwd(), 'public/media/hero-film-1920.mp4'))
+  ? ['/media/hero-film-1920.webm', '/media/hero-film-1920.mp4']
+  : [];
 
 export default function HomePage() {
   const heroMedia = media['hero-still'];
@@ -105,7 +117,7 @@ export default function HomePage() {
           // Tier 2: the 8-second seamless loop, which is what most visitors ever see.
           loop: ['/media/hero-loop-1280.webm', '/media/hero-loop-1280.mp4'],
           // Tier 3: the full 60 seconds, desktop on a good connection only.
-          full: ['/media/hero-film-1920.webm', '/media/hero-film-1920.mp4'],
+          full: FULL_FILM,
           portrait: ['/media/hero-film-portrait-1280.webm', '/media/hero-film-portrait-1280.mp4'],
         }}
       />

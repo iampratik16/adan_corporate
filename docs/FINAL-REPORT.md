@@ -95,6 +95,24 @@ Three audit scripts run outside Playwright: `check-contrast.ts` (the token matri
 
 ---
 
+## The header and the hero
+
+The client supplied the roundel as a 200x200 PNG **with real transparency**, which replaced the
+291x36 wordmark whose white ground was baked in. That one asset removed the workaround the header
+had been built around.
+
+- **The masthead is light frosted glass**, one row, with the mark and the firm's name at the left and
+  letterspaced uppercase navigation across it. Composited against the hero at four opacities, a dark
+  bar swallows the roundel's navy lower half; on light glass the whole mark reads. The reference site
+  can use a dark bar because its mark is pure white.
+- **The mega panel is gone.** It listed the five pillars with their descriptors and capability links
+  and carried a featured transaction, all of which `/expertise` already holds. Removing it also
+  removed the last reason to ship a navigation-menu library.
+- **The hero is centred at 72px in Instrument Serif**, down from 112px in Newsreader. Instrument
+  Serif has no tabular numerals, so it is scoped to the headline alone and never touches a figure.
+- A centred headline needed a centred scrim: a vertical wash plus a radial pool, much larger below
+  820px where the same copy fills far more of a narrow frame.
+
 ## Media
 
 Generated through Vertex AI on Application Default Credentials. No API key exists in this repository.
@@ -106,6 +124,16 @@ model availability before the manifest was tracking, which is recorded rather th
   endpoint returns 404 on this project.
 - `veo-3.1-generate-001` produced the hero film, conditioned on the approved still so the poster and
   frame one are the same composition. The same still was passed as the last frame, so the loop closes.
+- **The 60-second film is built as eight discrete 8-second shots**, not by chaining Veo's extend
+  feature. Each extend hop is generated from the previous output, so palette drift and geometry warp
+  compound across eight hops. Eight separate shots also give per-shot retries and an actual edit.
+  Each is animated from an anchor still matched to `hero-key`, and shot 8 carries `hero-key` as its
+  last frame so the loop closes in the model rather than in the edit.
+  See `docs/HERO-FILM.md` and `scripts/media/assemble-hero.ts`.
+- **Hero delivery is three tiers**: the poster (the LCP element), an 8-second loop requested once the
+  poster has painted, and the full film fetched in the background and swapped in at a loop boundary,
+  on desktop, wide, unmetered, motion-allowing clients only. The pause state persists in
+  `sessionStorage`.
 - 15 stills at up to 5 widths in AVIF and WebP; 4 films at 2 widths in MP4 and WebM, audio stripped.
 - One grade runs across stills and film so they share a single world.
 
@@ -114,9 +142,15 @@ deterministically. The source images turned out to be circular avatars with a re
 the pipeline detects the ring, crops the largest 4:5 rectangle that fits inside it, and matches every
 portrait to a common tone. Three people have no photograph and get a typographic monogram.
 
-Two generated assets were rejected on inspection and regenerated: the first `contact` take read as a
-medieval cloister, and three hero takes were rejected for a near-in-focus figure and for four
-near-identical silhouettes.
+Assets rejected on inspection and regenerated or re-picked:
+
+- the first `contact` take read as a medieval cloister, wrong for a firm founded in 2013
+- three hero takes: one for a near-in-focus figure, one for four near-identical silhouettes
+- **hero film shot 5 take 1: a recognisable London skyline** through the rain. The brief forbids
+  identifiable landmarks because this audience works in those cities. Take 2 dissolves the city
+  properly and brings a brass mullion into the foreground, tying it to the other seven shots.
+
+The rejection and its reason are recorded in `media/manifest.json`, not just in this report.
 
 ---
 
