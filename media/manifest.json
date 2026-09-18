@@ -1,0 +1,212 @@
+{
+  "budget": {
+    "fast": 40,
+    "standard": 12
+  },
+  "spent": {
+    "stills": 11,
+    "fast": 0,
+    "standard": 0
+  },
+  "costEstimateUsd": 0,
+  "entries": [
+    {
+      "shot": 2,
+      "id": "hero-02-glazing",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "The glass facade of an office building at dawn, framed flat and straight on. Reflections of cloud and neighbouring rooflines lie across the panes. A single figure is faintly visible behind the glass, well out of focus. Almost abstract: a grid of panes and reflected sky. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:40:49.464Z",
+      "file": "media/originals/hero-stills/hero-02-glazing-take1.png",
+      "kept": false
+    },
+    {
+      "shot": 2,
+      "id": "hero-02-glazing",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "The glass facade of an office building at dawn, framed flat and straight on. Reflections of cloud and neighbouring rooflines lie across the panes. A single figure is faintly visible behind the glass, well out of focus. Almost abstract: a grid of panes and reflected sky. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:41:42.339Z",
+      "file": "media/originals/hero-stills/hero-02-glazing-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 3,
+      "id": "hero-03-stair",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "Looking down a wide stone staircase from above. A figure ascends, hand sliding along a brushed brass handrail, seen from behind and above, face never visible. Morning light falls from a window off frame, throwing a soft rhomboid of light across the treads. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:42:46.289Z",
+      "file": "media/originals/hero-stills/hero-03-stair-take1.png",
+      "kept": false
+    },
+    {
+      "shot": 3,
+      "id": "hero-03-stair",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "Looking down a wide stone staircase from above. A figure ascends, hand sliding along a brushed brass handrail, seen from behind and above, face never visible. Morning light falls from a window off frame, throwing a soft rhomboid of light across the treads. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:43:23.660Z",
+      "file": "media/originals/hero-stills/hero-03-stair-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 4,
+      "id": "hero-04-boardroom",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "An empty boardroom at first light. A long dark timber table runs away from camera, its chairs pushed back at slightly different angles as though a meeting has just ended. The city beyond the full-height window is soft and out of focus in the early haze. Nobody present. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:44:05.062Z",
+      "file": "media/originals/hero-stills/hero-04-boardroom-take1.png",
+      "kept": false
+    },
+    {
+      "shot": 4,
+      "id": "hero-04-boardroom",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "An empty boardroom at first light. A long dark timber table runs away from camera, its chairs pushed back at slightly different angles as though a meeting has just ended. The city beyond the full-height window is soft and out of focus in the early haze. Nobody present. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:44:48.333Z",
+      "file": "media/originals/hero-stills/hero-04-boardroom-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 5,
+      "id": "hero-05-window",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "A window beaded with rain at blue hour, shallow focus on the beads of water. Beyond it a harbour city is dissolved entirely into cool blue bokeh with one or two warmer lights. The glass is the subject. No interior detail, nothing identifiable beyond. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:45:40.927Z",
+      "file": "media/originals/hero-stills/hero-05-window-take1.png",
+      "kept": false
+    },
+    {
+      "shot": 5,
+      "id": "hero-05-window",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "A window beaded with rain at blue hour, shallow focus on the beads of water. Beyond it a harbour city is dissolved entirely into cool blue bokeh with one or two warmer lights. The glass is the subject. No interior detail, nothing identifiable beyond. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:46:25.284Z",
+      "file": "media/originals/hero-stills/hero-05-window-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 6,
+      "id": "hero-06-corridor",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "A long corridor with a pale stone floor and full-height glazing down one side. Pools of morning light repeat along the length of the floor. A single figure walks away from camera into the light, back to camera, soft focus. Camera on the corridor centre line. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:47:08.221Z",
+      "file": "media/originals/hero-stills/hero-06-corridor-take1.png",
+      "kept": false
+    },
+    {
+      "shot": 6,
+      "id": "hero-06-corridor",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "A long corridor with a pale stone floor and full-height glazing down one side. Pools of morning light repeat along the length of the floor. A single figure walks away from camera into the light, back to camera, soft focus. Camera on the corridor centre line. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:47:49.433Z",
+      "file": "media/originals/hero-stills/hero-06-corridor-take2.png",
+      "kept": false
+    },
+    {
+      "shot": 7,
+      "id": "hero-07-material",
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "prompt": "Extreme close detail of the junction where a brushed brass edge meets fluted glass and honed pale stone. Very shallow depth of field. A low warm highlight travels along the metal. Entirely abstract, no human presence, no context. Same building, same dawn light, same muted palette as the reference image. Consistent colour temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, no shake. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        },
+        "referencedHeroKey": true
+      },
+      "timestamp": "2026-09-18T10:48:31.754Z",
+      "file": "media/originals/hero-stills/hero-07-material-take1.png",
+      "kept": false
+    }
+  ]
+}

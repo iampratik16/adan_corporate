@@ -96,18 +96,16 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        poster={{
-          src: '/media/hero-still-1920.webp',
-          avif: '/media/hero-still-1920.avif',
-          webp: '/media/hero-still-1920.webp',
-          widths: heroMedia.widths,
-        }}
+        poster={{ src: '/media/hero-still-1920.webp', widths: heroMedia.widths }}
         portraitPoster={
           media['hero-still-portrait'] ? { widths: media['hero-still-portrait'].widths } : undefined
         }
         blurDataURL={heroMedia.blurDataURL}
         film={{
-          landscape: ['/media/hero-film-1920.webm', '/media/hero-film-1920.mp4'],
+          // Tier 2: the 8-second seamless loop, which is what most visitors ever see.
+          loop: ['/media/hero-loop-1280.webm', '/media/hero-loop-1280.mp4'],
+          // Tier 3: the full 60 seconds, desktop on a good connection only.
+          full: ['/media/hero-film-1920.webm', '/media/hero-film-1920.mp4'],
           portrait: ['/media/hero-film-portrait-1280.webm', '/media/hero-film-portrait-1280.mp4'],
         }}
       />

@@ -50,14 +50,25 @@ test('the mobile menu traps focus and closes on Escape', async ({ page }) => {
   await expect(dialog).toBeHidden();
 });
 
-test('the expertise mega panel is keyboard operable', async ({ page }) => {
-  // The panel is a desktop control. Below 1024px the same content lives in the
-  // mobile sheet, which the test above covers.
+test('the primary navigation is keyboard reachable and marks the current page', async ({
+  page,
+}) => {
+  // There is no mega panel: Expertise is a plain link to the overview, which
+  // already carries the five pillars with their descriptors and capabilities.
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
-  const trigger = page.getByRole('button', { name: 'Expertise' }).first();
-  await trigger.focus();
+
+  const expertise = page.getByRole('navigation', { name: 'Primary' }).getByRole('link', {
+    name: 'Expertise',
+  });
+  await expertise.focus();
+  await expect(expertise).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('link', { name: 'Corporate Finance' }).first()).toBeVisible();
-  await page.keyboard.press('Escape');
+  await page.waitForURL('**/expertise');
+  await expect(page.locator('h1')).toBeVisible();
+
+  // Back on a section page, that item must be announced as the current page.
+  await expect(
+    page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Expertise' }),
+  ).toHaveAttribute('aria-current', 'page');
 });

@@ -1,132 +1,216 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+export interface FilmSources {
+  /** Tier 2: the 8-second seamless loop. What most visitors ever see. */
+  loop: string[];
+  /** Tier 3: the full 60 seconds. Desktop, wide, unmetered, motion allowed. */
+  full: string[];
+  /** The 9:16 loop, for a phone held upright. */
+  portrait: string[];
+}
+
+const PAUSE_KEY = 'adan:hero-film-paused';
+/** Give up on the full film after this and keep looping. */
+const FULL_FILM_TIMEOUT = 15_000;
+/** Cross-fade length when the full film takes over from the loop. */
+const SWAP_MS = 400;
 
 /**
- * The ambient hero film.
+ * The hero film, delivered in three tiers. See docs/HERO-FILM.md section 7.
  *
- * Rules the brief sets, all enforced here:
- *  - muted, playsinline, loop, preload="none"
- *  - never loaded on Save-Data, on reduced motion, or on a metered connection
- *  - starts only after the poster has painted, so it never competes for the LCP
- *  - pauses when off screen or when the tab is hidden
- *  - a visible pause control, which is also a WCAG 2.2 requirement for anything
- *    that moves for more than five seconds
+ *   1. the poster, rendered by the server as a plain <img>. The LCP element.
+ *   2. an 8-second loop, requested once the poster has painted.
+ *   3. the full 60 seconds, fetched in the background and swapped in at a loop
+ *      boundary, but only on a desktop-shaped, unmetered, motion-allowing client.
  *
- * The poster is rendered by the server as a plain <img>, and this component
- * fades the film in over it once the first frame is decodable. The film was
- * generated from that exact still, so frame one and the poster are the same
- * composition and nothing shifts at the handover.
+ * The swap happens at the end of a loop cycle rather than mid-play, so the cut
+ * lands where the film already returns to its first frame and the cross-fade has
+ * nothing to hide. If the film has not arrived within fifteen seconds it is
+ * abandoned and the loop simply continues, which nobody notices.
+ *
+ * The pause control is always present, keyboard reachable, and its state
+ * survives navigation in sessionStorage: a reader who turns the film off should
+ * not have to turn it off again on every page they come back to.
  */
-export function HeroFilm({ sources }: { sources: { landscape: string[]; portrait: string[] } }) {
-  const ref = useRef<HTMLVideoElement>(null);
+export function HeroFilm({ sources }: { sources: FilmSources }) {
+  const loopRef = useRef<HTMLVideoElement>(null);
+  const fullRef = useRef<HTMLVideoElement>(null);
+
   const [mounted, setMounted] = useState(false);
-  const [ready, setReady] = useState(false);
+  const [portrait, setPortrait] = useState(false);
+  const [loopReady, setLoopReady] = useState(false);
+  const [wantFull, setWantFull] = useState(false);
+  const [fullReady, setFullReady] = useState(false);
+  const [showingFull, setShowingFull] = useState(false);
   const [paused, setPaused] = useState(false);
   const [failed, setFailed] = useState(false);
-  // <source media> was dropped from the video spec, so the crop is chosen here
-  // rather than declaratively. Decided once, before the element mounts, so no
-  // file is ever fetched twice.
-  const [portrait, setPortrait] = useState(false);
 
+  /* --- Decide what, if anything, to load. ----------------------------------- */
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const connection = (
-      navigator as Navigator & {
-        connection?: { saveData?: boolean; effectiveType?: string };
-      }
+      navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
     ).connection;
-    const thin =
-      connection?.saveData === true ||
-      (connection?.effectiveType !== undefined && /2g/.test(connection.effectiveType));
+    const saveData = connection?.saveData === true;
+    const slow =
+      connection?.effectiveType !== undefined && /(^|-)[23]g$/.test(connection.effectiveType);
 
-    if (reduced || thin) return;
+    // Reduced motion or a metered connection means the poster is the hero.
+    if (reduced || saveData || slow) return;
 
-    // Wait for the poster to have painted before asking for 1.5 MB of film.
-    // Orientation is decided at the same moment the element mounts, so no file
-    // is ever fetched for the wrong crop and no state is set during the effect
-    // body itself, which would cascade a render.
     const start = () => {
-      setPortrait(
+      const isPortrait =
         window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches &&
-          sources.portrait.length > 0,
-      );
+        sources.portrait.length > 0;
+      setPortrait(isPortrait);
+
+      // The full film is a desktop luxury: fine pointer, real width, and a
+      // connection that is either good or unmeasurable.
+      const roomy =
+        window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+        window.innerWidth >= 1024 &&
+        !isPortrait &&
+        (connection?.effectiveType === undefined || connection.effectiveType === '4g') &&
+        sources.full.length > 0;
+      setWantFull(roomy);
+
+      try {
+        setPaused(window.sessionStorage.getItem(PAUSE_KEY) === '1');
+      } catch {
+        // Private mode. Default to playing.
+      }
       setMounted(true);
     };
+
     if (typeof window.requestIdleCallback === 'function') {
       const handle = window.requestIdleCallback(start, { timeout: 2000 });
       return () => window.cancelIdleCallback(handle);
     }
     const handle = window.setTimeout(start, 900);
     return () => clearTimeout(handle);
-  }, [sources.portrait.length]);
+  }, [sources.full.length, sources.portrait.length]);
+
+  /* --- Abandon the full film if it does not turn up. ------------------------ */
+  useEffect(() => {
+    if (!wantFull || fullReady) return;
+    const handle = window.setTimeout(() => setWantFull(false), FULL_FILM_TIMEOUT);
+    return () => clearTimeout(handle);
+  }, [wantFull, fullReady]);
+
+  /* --- Swap at a loop boundary, never mid-play. ----------------------------- */
+  useEffect(() => {
+    const loop = loopRef.current;
+    const full = fullRef.current;
+    if (!loop || !full || !fullReady || showingFull) return;
+
+    const onTime = () => {
+      if (!loop.duration || loop.duration - loop.currentTime > SWAP_MS / 1000 + 0.1) return;
+      loop.removeEventListener('timeupdate', onTime);
+      void full.play().catch(() => {});
+      setShowingFull(true);
+    };
+    loop.addEventListener('timeupdate', onTime);
+    return () => loop.removeEventListener('timeupdate', onTime);
+  }, [fullReady, showingFull]);
+
+  /* --- Pause off screen, when hidden, and when asked. ----------------------- */
+  const active = useCallback(
+    () => (showingFull ? fullRef.current : loopRef.current),
+    [showingFull],
+  );
 
   useEffect(() => {
-    const video = ref.current;
-    if (!video || !mounted) return;
+    if (!mounted) return;
+    const node = loopRef.current;
+    if (!node) return;
+
+    let onScreen = true;
+    const sync = () => {
+      const video = active();
+      if (!video) return;
+      if (onScreen && !paused && !document.hidden) void video.play().catch(() => {});
+      else video.pause();
+    };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry) return;
-        if (entry.isIntersecting && !paused && !document.hidden) void video.play().catch(() => {});
-        else video.pause();
+        onScreen = entry?.isIntersecting ?? false;
+        sync();
       },
       { threshold: 0.15 },
     );
-    observer.observe(video);
-
-    const onVisibility = () => {
-      if (document.hidden) video.pause();
-      else if (!paused) void video.play().catch(() => {});
-    };
-    document.addEventListener('visibilitychange', onVisibility);
+    observer.observe(node);
+    document.addEventListener('visibilitychange', sync);
+    sync();
 
     return () => {
       observer.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('visibilitychange', sync);
     };
-  }, [mounted, paused]);
+  }, [mounted, paused, active]);
 
   const toggle = () => {
-    const video = ref.current;
-    if (!video) return;
-    if (video.paused) {
-      void video.play().catch(() => {});
-      setPaused(false);
-    } else {
-      video.pause();
-      setPaused(true);
+    const next = !paused;
+    setPaused(next);
+    try {
+      window.sessionStorage.setItem(PAUSE_KEY, next ? '1' : '0');
+    } catch {
+      // Private mode. The preference simply does not persist.
     }
   };
 
   if (failed) return null;
 
+  const loopSources = portrait ? sources.portrait : sources.loop;
+
   return (
     <>
       {mounted && (
         <video
-          ref={ref}
+          ref={loopRef}
           muted
           loop
           playsInline
           preload="none"
-          // No poster attribute: the <img> behind this element already paints
-          // the identical first frame, and a poster here fetched the full-size
-          // still a second time on every load.
           aria-hidden="true"
           tabIndex={-1}
-          onCanPlay={() => setReady(true)}
+          onCanPlay={() => setLoopReady(true)}
           onError={() => setFailed(true)}
           className="absolute inset-0 size-full object-cover transition-opacity duration-[900ms] ease-out-quart"
-          style={{ opacity: ready ? 1 : 0 }}
+          style={{ opacity: loopReady && !showingFull ? 1 : 0 }}
         >
-          {(portrait ? sources.portrait : sources.landscape).map((src) => (
+          {loopSources.map((src) => (
             <source key={src} src={src} type={src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
           ))}
         </video>
       )}
 
-      {mounted && ready && (
+      {mounted && wantFull && (
+        <video
+          ref={fullRef}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+          tabIndex={-1}
+          onCanPlayThrough={() => setFullReady(true)}
+          onError={() => setWantFull(false)}
+          className="absolute inset-0 size-full object-cover"
+          style={{
+            opacity: showingFull ? 1 : 0,
+            transition: `opacity ${SWAP_MS}ms var(--ease-out-quart)`,
+          }}
+        >
+          {sources.full.map((src) => (
+            <source key={src} src={src} type={src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+          ))}
+        </video>
+      )}
+
+      {mounted && loopReady && (
         <button
           type="button"
           onClick={toggle}

@@ -1,61 +1,67 @@
+import { site } from '@content/site';
+
 /**
- * The Adan Corporate mark.
+ * The Adan Corporate lockup: the supplied mark, plus the firm's name set in the
+ * site's own text face.
  *
- * The only source available is a 291x36 raster with the white ground baked in.
- * It has been alpha-keyed and rescaled, and nothing else: the mark is never
- * redrawn, recoloured or reversed. Its navy and crimson both disappear against
- * a dark ground, so on dark bands it sits on a paper masthead plate rather than
- * being inverted. A vector file is requested in docs/CLIENT-QUESTIONS.md.
+ * The client supplied a 200x200 PNG of the roundel with real transparency,
+ * which replaced the 291x36 wordmark that had the white ground baked in and
+ * could not be reversed at all. The mark is used exactly as supplied: scaled,
+ * never redrawn, never recoloured.
+ *
+ * The name beside it is typeset rather than an image, because the only wordmark
+ * asset is anti-aliased against white and hollows out when keyed. Typesetting
+ * the company's name is not altering the mark, and it stays crisp at any size.
+ * A vector wordmark is still requested in docs/CLIENT-QUESTIONS.md.
  */
-export function Logo({ height = 26, className }: { height?: number; className?: string }) {
-  const width = Math.round((291 / 36) * height);
+export function Logo({
+  size = 36,
+  showName = true,
+  className,
+}: {
+  size?: number;
+  showName?: boolean;
+  className?: string;
+}) {
   return (
-    <picture className={className}>
-      <source
-        type="image/webp"
-        srcSet="/brand/adan-wordmark-36.webp 291w, /brand/adan-wordmark-72.webp 582w, /brand/adan-wordmark-108.webp 873w"
-        sizes={`${width}px`}
-      />
-      <img
-        src="/brand/adan-wordmark-72.png"
-        srcSet="/brand/adan-wordmark-36.png 291w, /brand/adan-wordmark-72.png 582w, /brand/adan-wordmark-108.png 873w"
-        sizes={`${width}px`}
-        width={width}
-        height={height}
-        alt="Adan Corporate"
-        // The masthead paints before anything else, and on a phone this small
-        // mark is what Chrome reports as the largest contentful paint, so it
-        // gets the priority hint rather than the hero poster behind it.
-        fetchPriority="high"
-        decoding="async"
-        style={{ width, height }}
-      />
-    </picture>
+    <span className={`flex items-center gap-2.5 ${className ?? ''}`}>
+      <Mark size={size} />
+      {showName && (
+        <span className="text-small font-medium tracking-[0.02em] whitespace-nowrap text-ink">
+          {site.name}
+        </span>
+      )}
+    </span>
   );
 }
 
-/** The roundel, which does hold up on a dark ground. Used as a small mark only. */
-export function Roundel({ size = 28, className }: { size?: number; className?: string }) {
+/** The mark on its own. It carries alpha, so it sits on any light surface. */
+export function Mark({
+  size = 36,
+  priority = false,
+  className,
+}: {
+  size?: number;
+  priority?: boolean;
+  className?: string;
+}) {
   return (
-    <picture>
-      <source
-        type="image/webp"
-        srcSet="/brand/adan-roundel-52.webp 52w, /brand/adan-roundel-104.webp 104w"
-        sizes={`${size}px`}
-      />
-      <img
-        src="/brand/adan-roundel-180.png"
-        width={size}
-        height={size}
-        alt=""
-        aria-hidden="true"
-        // Footer decoration, never the LCP: 180px of PNG was being fetched
-        // eagerly on every page for a 26px mark.
-        loading="lazy"
-        decoding="async"
-        className={className}
-        style={{ width: size, height: size }}
-      />
-    </picture>
+    <img
+      src="/brand/adan-mark-80.webp"
+      srcSet="/brand/adan-mark-40.webp 40w, /brand/adan-mark-80.webp 80w, /brand/adan-mark-120.webp 120w, /brand/adan-mark-160.webp 160w"
+      sizes={`${size}px`}
+      width={size}
+      height={size}
+      alt="Adan Corporate"
+      // The masthead paints before anything else and is what Chrome reports as
+      // the largest contentful paint on a phone.
+      {...(priority ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
+      decoding="async"
+      className={className}
+      style={{ width: size, height: size }}
+    />
   );
 }
+
+/** Backwards-compatible alias: the footer and 404 still ask for a Roundel. */
+export const Roundel = Mark;

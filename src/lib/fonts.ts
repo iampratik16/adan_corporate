@@ -1,4 +1,4 @@
-import { Archivo, Newsreader } from 'next/font/google';
+import { Archivo, Instrument_Serif, Newsreader } from 'next/font/google';
 
 /**
  * Two families, self-hosted through next/font so there is no render-blocking
@@ -46,4 +46,22 @@ export const archivo = Archivo({
   fallback: ['system-ui', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
-export const fontVariables = `${newsreader.variable} ${archivo.variable}`;
+/**
+ * The hero headline only.
+ *
+ * Instrument Serif is a display face: higher contrast and more classical than
+ * Newsreader, which is drawn for reading at text sizes. At the hero's size it
+ * has the character the reference has and Newsreader does not. It carries no
+ * `tnum`, so it can never be used for a figure, and it is deliberately scoped
+ * to one element rather than made a third general-purpose family.
+ */
+export const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-hero-face',
+  preload: true,
+  fallback: ['Georgia', 'Times New Roman', 'serif'],
+});
+
+export const fontVariables = `${newsreader.variable} ${archivo.variable} ${instrumentSerif.variable}`;

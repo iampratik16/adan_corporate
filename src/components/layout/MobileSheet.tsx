@@ -3,7 +3,14 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
-import type { NavLink, NavPillar } from './HeaderShell';
+import type { NavLink } from './HeaderShell';
+
+interface NavPillar {
+  id: string;
+  title: string;
+  descriptor: string;
+  href: string;
+}
 
 /**
  * The mobile navigation sheet.
@@ -41,7 +48,7 @@ export function MobileSheet({
           <Dialog.Title className="sr-only">Menu</Dialog.Title>
           <div className="container-site">
             <div className="flex h-[72px] items-center justify-between">
-              <Logo height={24} />
+              <Logo size={34} />
               <Dialog.Close className="-mr-2 flex size-12 items-center justify-center">
                 <span className="sr-only">Close menu</span>
                 <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">

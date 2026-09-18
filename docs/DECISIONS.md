@@ -74,9 +74,58 @@ cropped and stacked. Its declared-but-unused italic went at the same time, for a
 
 Both are one line to restore in `src/lib/fonts.ts`, which says so, and says to re-measure first.
 
-## 5. The logo cannot be reversed, so the header carries a masthead plate
+## 5. The client supplied a usable mark, and it changed the header
 
-The only asset that exists is **291x36px with the white ground baked in and no alpha**. It was
+**Superseded the earlier masthead-plate workaround.**
+
+The original asset was a 291x36 wordmark with the white ground baked in and no alpha. Keying it
+revealed the letterforms were anti-aliased against white, so they hollowed out, and the mark could
+not sit on a dark ground at all. The header worked around that with a paper plate over the film.
+
+The client then supplied `adan_corporate_finance_logo-removebg-preview.png`: the roundel, 200x200,
+with real transparency. The workaround is gone.
+
+**The bar is light glass, and the mark decided that.** Composited against the hero at four
+opacities, a dark frosted bar swallows the roundel's navy lower half and leaves a broken red arc
+with a floating white disc. On light glass the whole mark reads. The reference site can use a dark
+bar because its mark is pure white; ours is navy and red.
+
+The firm's name beside the mark is **typeset in Archivo, not an image**. The only wordmark asset is
+the one that hollows out when keyed, and typesetting a company's own name is not altering its mark.
+A vector wordmark is still requested in `CLIENT-QUESTIONS.md`.
+
+## 5a. The mega panel was removed
+
+The Expertise dropdown listed all five pillars with their descriptors and their capability links, and
+carried a featured transaction card. Both are gone and Expertise is now a plain link to
+`/expertise`, which already carries the same five pillars with the same descriptors, their full
+capability groups and their photography.
+
+The panel was a second place to keep one list correct, and a single-trigger dropdown in a header is
+a disclosure, not navigation. Removing it also removed the last reason to ship a navigation-menu
+library.
+
+## 5b. The hero was rebuilt centred, at a smaller size, in a different face
+
+The headline was 112px, left-aligned, in Newsreader. It is now **72px, centred, in Instrument
+Serif**, which is a display face: higher contrast and more classical than Newsreader, which is drawn
+for reading at text sizes.
+
+Instrument Serif has **no `tnum`**, so it can never carry a figure and is scoped to the hero
+headline alone rather than becoming a third general-purpose family. Newsreader still carries every
+other heading and every number.
+
+A centred headline needed a different scrim. The left-to-right wash built for left-aligned copy
+would have darkened one side of a symmetrical frame, so the hero now uses a vertical wash plus a
+radial pool under the text, with a much taller and wider pool below 820px where the same copy fills
+far more of a narrow frame. Both are measured against the brightest extracted **film frame**, not
+the poster.
+
+## 6. Superseded: the original wordmark could not be reversed
+
+_Kept for the record. Section 5 describes what replaced this._
+
+The only asset that existed was **291x36px with the white ground baked in and no alpha**. It was
 alpha-keyed and rescaled, which is asset preparation; the mark itself is never redrawn, recoloured
 or altered.
 
