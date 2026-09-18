@@ -21,8 +21,8 @@ export function Header() {
 
   return (
     <HeaderShell
-      utility={[...site.nav.utility]}
       primary={[...site.nav.primary]}
+      secondary={[...site.nav.secondary]}
       pillars={navPillars}
     />
   );

@@ -9,180 +9,190 @@ export interface PortraitAsset {
 /** Widths actually emitted. The source avatars do not support more. */
 export const portraitWidths = [240, 320] as const;
 
+/**
+ * Cache key for every portrait URL, stamped at the end of this run.
+ *
+ * /media is served `immutable` for a year and these filenames never change,
+ * so a browser that has seen one version of a portrait will not ask for
+ * another. Re-processing the set in colour changed every file on disk and
+ * nothing on screen until this existed. Appended as `?v=` by Portrait.tsx.
+ */
+export const portraitsVersion = 'mu790sn1';
+
 export const portraits: Record<string, PortraitAsset> = {
   'ajay-mavinkurve': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACwAQCdASoMAA8ABABoJaQAAhuxrF8gAP7pTPBuCasYqCjuoV3EwFq6lNbHWC8uBKTK6qzSSfyAAAAA',
-    width: 180,
-    height: 225,
+      'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoMAAwABABoJZgCdADcZhIWI3bAAP6Jka/f/b0hIe4heim0ECx5taB3VSLtzz2KDh6UE69C6HCuvKDsAAA=',
+    width: 264,
+    height: 264,
   },
   'ajay-sethi': {
     blurDataURL:
-      'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAAAQAgCdASoMAA8ABABoJaQAAl3Q4bUtxsQAAP6Y5/u3+NuhUp5J5j4Ctp4uC4ckFzAAAA==',
-    width: 338,
-    height: 422,
+      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoMAAwABABoJQBOgBhyEw8yAAD+xqrFazBi8Vmc7tGWWBqHEAGFEmxPo5zrNxpwu06AAA==',
+    width: 495,
+    height: 495,
   },
   'arun-shroff': {
     blurDataURL:
-      'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoMAA8ABABoJaQAAc+riFAAAP7ceNjrfYnWrwlGV7KIGCsY9Vgf1AkQOAAAAA==',
-    width: 407,
-    height: 508,
+      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoMAAwABABoJZgCdADdF3aHAAD+S4PA6EVDO21MuX4QnTqgQvukri+fHynGdNo3MVK7AwAA',
+    width: 596,
+    height: 596,
   },
   'craig-tingle': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAAAQAgCdASoMAA8ABABoJaQAAuzXs9MFT7SMAPlIWYrib3AnH0qtenulVH7j03MpBMnNYVKvhj/FKnAA',
-    width: 238,
-    height: 297,
+      'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoMAAwABABoJYgCdADDmWXW+CAA/mcwHtlkQJTuvBpynW4xFoyLPJ3EWGyBwHR5+gNR542FwzAAAA==',
+    width: 349,
+    height: 349,
   },
   'dipak-khot': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoMAA8ABABoJaQAAlmF87w5gAD+1dqmxm+1YcjRWpyC0e5C8DbvyGStnxZDiSXru7W4VyE6AAA=',
-    width: 234,
-    height: 292,
+      'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoMAAwABABoJQBOgBudT/9RAAAA/sQGfKG6eaGUaK8mJfYY+49gbk5eywrk/oAEZzK+z75EYIBoCsOAAAA=',
+    width: 344,
+    height: 344,
   },
   'edgar-garay': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABwAQCdASoMAA8ABABoJaQAAk8YAADibsR6tBDty7bEli+maVMwsR7Ire/CeeSRLzaW7DDNLtD25+E8QAA=',
-    width: 251,
-    height: 313,
+      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoMAAwABABoJQBOgBtyR+N2gAD+atOgrTT4crngszn52luuFkY6rj/bq9oimi0B84nC1o1IAAA=',
+    width: 368,
+    height: 368,
   },
   'freddie-tshiaba': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoMAA8ABABoJaQAAlvLT+SaAAAA+XJ1MdTQvB0SpFLLr3VN885UhQRY5MHdqmgbdkxdaAAA',
-    width: 145,
-    height: 181,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAgCdASoMAAwABABoJZgCw7D7Fj0uKoEAAAD+mK6pc0HDtyJbarj8BQdPU5xul0XnOBRlJkWZC7mjKszWAAAA',
+    width: 213,
+    height: 213,
   },
   'george-christelis': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAABwAQCdASoMAA8ABABoJaQAAmekAAD+6YzKS5oeO+jH7DvEJ5yjISaRLWONsB1Kvq9mwmdH6FCWAAAA',
-    width: 162,
-    height: 202,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoMAAwABABoJbACdADbPf3MPoAA/omNORtRloTkaOSJS8HWySgW6fTKtl3hD8IEmrjGt+59YAO+UQAA',
+    width: 237,
+    height: 237,
   },
   'heena-tilwani': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoMAA8ABABoJaQAAt0C3L4hYAAA/on4DuWLzUUu761awcj62xaNQiw7A1rBUPLZ4tbAVuOAAAA=',
-    width: 145,
-    height: 181,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoMAAwABABoJaAC7ACjFyfgAADie9td3MNw8+hUMJtBiG5I0Q4xWG2H3hMldzBJmwUussU0xggRFwAA',
+    width: 212,
+    height: 212,
   },
   'jean-bernard-tanqueray': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAAAQAgCdASoMAA8ABABoJaQAAiaCYtpv3ewAAP7BzHrZaC3o29ikx9xXIBvpQqM3wAidYuyRZZY3gAAA',
-    width: 210,
-    height: 262,
+      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAAAwAgCdASoMAAwABABoJYgCdAEfvZFe0ZA9jAD+hYiO3yCr0C8fl4VQ7aUCYWD6uR2zfwrkeaQZWyUSQAA=',
+    width: 307,
+    height: 307,
   },
   'keshav-adya': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoMAA8ABABoJaQAAxYRjRoIYJAA4m6oxxCPspuBaY25rP3aMbZWPXs7/mMe7aAWmciBqK4JtwxUmIAA',
-    width: 216,
-    height: 270,
+      'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoMAAwABABoJQBOgB+Fw+XGS9sAAP5ncsTZl6RuZfJ6YlBld74+olttyQTKSHkBIeHE4S18wwAAAA==',
+    width: 316,
+    height: 316,
   },
   'kieran-bourke': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoMAA8ABABoJaQAAhovXqwAAPw7LXUzYuae4VT9ZJQ3iYTKqfQNwfCKmruu2VFZJnQ5sEoAAAA=',
-    width: 246,
-    height: 307,
+      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAAwABABoJQBOgBulMCqT2AAA/gmTKfoHlkW/Z/d2O+eekYinhzMZxZnPIrL3H5sAAA==',
+    width: 361,
+    height: 361,
   },
   'marco-salvini': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoMAA8ABABoJaQAAlwwKvEsIAAA/reY0sgNNZCg/lb3V4erIRJmoq5SNqW//VBaSx5twAAA',
-    width: 344,
-    height: 430,
+      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoMAAwABABoJQBYdh9ixoe8pMAA/sbQmVP6XzbcpjJ+f9JOMOpCKVyZfTxThr131kcWAAAA',
+    width: 504,
+    height: 504,
   },
   'mike-kemball': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAA8ABABoJaQAAn/g8k13eYAA/CajLcfvqNAr2JGS0D79nyvGTnvVAePCGffMvRIAAA==',
-    width: 236,
-    height: 295,
+      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoMAAwABABoJQBOgBukbvsaHQAA/gbybQhoibI9dRgKa+P67QG4FPQHnY1bWqqxrasIuF2nQAA=',
+    width: 346,
+    height: 346,
   },
   'nav-kaplish': {
     blurDataURL:
-      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoMAA8ABABoJaQAAt1u1s0DB2EAAP6+VjoCzAQ6nuMs/bmax/1v1uv1aTzoo0GHFnvXR5seIQSA2xRumAAAAA==',
-    width: 233,
-    height: 291,
+      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoMAAwABABoJYgCdADJTyGUfpQAAOJ+NJn8DnPsniMKbraiYV/0CAtKYKQJP9O18XMiaBUnx9yy6RoAj6AAAA==',
+    width: 342,
+    height: 342,
   },
   'neeraj-arora': {
     blurDataURL:
-      'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACwAQCdASoMAA8ABABoJaQAAfInChAAAMvggxzwlrlu1s4icir07jx2GUH3AAAA',
-    width: 140,
-    height: 175,
+      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoMAAwABABoJZgCdAEXZGTlEgAA+QbOxFR2s8FNEqYzeHNajqb/WNGMcvHWxsH37A4Z6AAA',
+    width: 205,
+    height: 205,
   },
   'preethi-hari': {
     blurDataURL:
-      'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAQCdASoMAA8ABABoJaQAAsRmdoAA9r5a4Jkn2rWg+8d/eFx8BFkyaWPI63UyysM0sRaDS7hI9/LOLR+6cH4HmAA=',
-    width: 247,
-    height: 308,
+      'data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoMAAwABABoJZACdAD7il1HjBxIAP5rM4yBCTvJ3BdGT7GiBqMIVRSAtx7s1L/Oe4lqPfdKTCX+qUVWVAiiAAAA',
+    width: 362,
+    height: 362,
   },
   'raju-venkataraman': {
     blurDataURL:
-      'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoMAA8ABABoJaQAAq+WWJ7/NXAAAP7drq8fOstoTNmhYcq8DUvj92eT06MltIPh8g1/pPbwbnFEG7OR4AA=',
-    width: 200,
-    height: 250,
+      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoMAAwABABoJYgCdAECpR+raLwAAP5N0b2GzFfIO0KebrEdWkUdKTHOm60tLsFYLZSADWw8lvBrXzufqPioAA==',
+    width: 294,
+    height: 294,
   },
   'rauf-akhundov': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAACwAQCdASoMAA8ABABoJaQAApvS/wQAAP7MTBQZk953ojbQJc4i2BusiD8lYdZr2+C3jgs2hsAAAA==',
-    width: 169,
-    height: 211,
+      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoMAAwABABoJaACdADVjMMQAPwoQjuBgmoCp4qJ3Z4drHrl1gLeOMwt87MfH7X/hiPXQ5uGAAA=',
+    width: 248,
+    height: 248,
   },
   'roland-giebitz': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoMAA8ABABoJaQAAuySAYKZ8YAA4n4Wvr075Ux5pN834tzlNgyHaok2ca/GHIUQ6xk6awMTLt34AAAA',
-    width: 253,
-    height: 316,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoMAAwABABoJYgCdADcvpPWYAAA/prJJcsh+pGwhUmHwu2rNt1YbN3bwHkdhOn+H5Knf/bZIPyx4AAA',
+    width: 370,
+    height: 370,
   },
   'sabapaty-suryanarayanan': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACwAQCdASoMAA8ABABoJaQAAkrVzA8AAP28I600TzB+0VMeWdF/4JqfZshJRBL29xRbcCAAAAA=',
-    width: 180,
-    height: 225,
+      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoMAAwABABoJagCdADc+Cnl7AAA/XgLxmfzMODi+jqNdc9Qbva6WckT9doqzqmIbRFn1JppkAA=',
+    width: 264,
+    height: 264,
   },
   'sandeep-bhat': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACQAQCdASoMAA8ABABoJaQAAUooP8AA/gbs71xtXRNJ2cmMVsNXTM5yLVdTCYHD9aOcpBXaW/yBSAAA',
-    width: 167,
-    height: 208,
+      'data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoMAAwABABoJQBOgBtnylqAAAD+XvuF2fEWCZzvRQGeCZRb5YvraWaul+yPsLMVUuj4peV3yqAAAA==',
+    width: 245,
+    height: 245,
   },
   'shreyash-gandhi': {
     blurDataURL:
-      'data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoMAA8ABABoJaQAAtsZUbROAAD+TXINe9x54LTXSlGJPQMi6Iijx3ePKnAAAA==',
-    width: 146,
-    height: 182,
+      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAwAgCdASoMAAwABABoJYgCdAELYa9O06/AAADibWYtXDxGjkG592jlfXXQMmtbdiuzaDSxibQAAA==',
+    width: 214,
+    height: 214,
   },
   'sreeraman-p-s': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAQCdASoMAA8ABABoJaQAAq9hGz1ZfUAA/sBAf7f8BjdjXHymfVrUQkMzwSyG+oqnQP3oIUAAAA==',
-    width: 210,
-    height: 262,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAQAgCdASoMAAwABABoJZACw7ECpkXRpmPgAPwpNKSNbX9d0e8pPi4Lb+z7RFSTv4S1aAlVSHs13NGVcb6SAAAA',
+    width: 307,
+    height: 307,
   },
   'suresh-nambiar': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoMAA8ABABoJaQAAtvKubpCyvwA/qxZeU31llB8sxIj7fh83EaTTPT0DtVG8NwIE/XXvrYAAAA=',
-    width: 226,
-    height: 282,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAQAgCdASoMAAwABABoJYgCdIExE7PiSuwAAPu9MGyv7FDzRtTMtxlkxeB1SYuBMxpgETDe0E5DJmn6VDIwAAAA',
+    width: 331,
+    height: 331,
   },
   'thomas-peutz': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoMAA8ABABoJaQAAsSOOnP55AAA/nIEUWjhrbQzrQH0WmbEga6uNhjw6leSuQAA',
-    width: 208,
-    height: 260,
+      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoMAAwABABoJQBOgBwZkp+EAAD7yBnCvN2GxdEu9BoluqcR8E1y+0i8bx04aVy6I9AAAA==',
+    width: 305,
+    height: 305,
   },
   'thu-nga-haskovcova': {
     blurDataURL:
-      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoMAA8ABABoJaQAAtzO2VpqvWgAAP7Cr2HTQ6GuOdZPJE1Ut6nN3hGLHHtT7sAlAfHH0TlzG8kTjnwSvgAAAA==',
-    width: 392,
-    height: 490,
+      'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABQAgCdASoMAAwABABoJYwCdH8AE7Q+QHDJnwAA/QIAFRvggFDWyc0sDjMUZYpjkqMDtSt3pcKyB29iH6a6K4dq2YkCC1vkhy3AAA==',
+    width: 574,
+    height: 574,
   },
   'varun-nadkarni': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoMAA8ABABoJaQAAt1wKs9KgAD+wLwQqJxT6LhfbXYRTsLksIx2e2wupOJ9ODk1fu57LBzYAAA=',
-    width: 173,
-    height: 216,
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoMAAwABABoJYgCdAEP0LwT36AA4nt0z1RLhPFHUhT7ns6eJDTtEcEgbvwyWr6z14/Myln5s1zDYAAA',
+    width: 254,
+    height: 254,
   },
   'vernon-d-cruz': {
     blurDataURL:
-      'data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAACwAQCdASoMAA8ABABoJaQAAtxSmugAAPAOVrnNHicEOuV+ceSjtmcxlWPF0W03VDLYSYGkjoAAAA==',
-    width: 232,
-    height: 290,
+      'data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoMAAwABABoJagCdADDWBMAAP4Gy//tRiZLMGVVUNu6C9cezQwqPt9DgRZzuq7R6fNu4/AQoAA=',
+    width: 340,
+    height: 340,
   },
 };
 

@@ -66,8 +66,13 @@ to `docs/CLIENT-QUESTIONS.md`.
 no em-dashes. All copy is draft for partner review and collected in `docs/COPY-DRAFT.md`.
 
 **People.** No generative model ever touches an image of a named person. Headshots are downloaded
-and processed deterministically: one 4:5 crop, greyscale, matched contrast. No photograph means a
-typographic monogram, not a stock face. Publish firm-domain email addresses only.
+and processed deterministically: one 4:5 crop, in colour, at a matched exposure. No photograph means
+a typographic monogram, not a stock face. Publish firm-domain email addresses only.
+
+They were greyscale, which hid how uneven the sources are; the client asked for colour, and the red
+ring baked into four corners of every crop became visible the moment they were. Two lessons worth
+keeping: the crop factor in `scripts/media/portraits.ts` has to clear the ring, and greyscale was
+doing more work than it was credited for. See `docs/DECISIONS.md` section 29.
 
 ## Budgets, enforced
 

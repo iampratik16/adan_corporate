@@ -1,5 +1,8 @@
 /**
- * The 60-second hero film. See docs/HERO-FILM.md.
+ * The hero film's shot list. See docs/HERO-FILM.md.
+ *
+ * All eight shots are generated and kept. assemble-hero.ts cuts four of them
+ * into the delivered film; the rest are what a longer cut is rebuilt from.
  *
  * Eight discrete 8-second shots, not one long generation. Veo's extend feature
  * samples the last second of a clip and adds ~7s per hop, so drift compounds
@@ -10,7 +13,26 @@
  */
 import { HOUSE_LOOK } from './shots.js';
 
-/** Every shot carries this, so eight separate generations stay one world. */
+/**
+ * The exterior clause, for the two aerials.
+ *
+ * CONTINUITY below says "same building", which is exactly right for six shots
+ * standing inside one and exactly wrong for a shot a thousand feet above a
+ * city. What has to hold across a cut from a lobby to a skyline is the hour and
+ * the palette, not the architecture.
+ *
+ * "No recognisable skyline" is not boilerplate. The reference images supplied
+ * for these two were Manhattan and Hong Kong, and shots.ts opens with the rule
+ * that governs all of this: EVOKE, DO NOT DEPICT. A generated Manhattan is
+ * always slightly wrong, and the people this film is made for work in that
+ * city and will see it.
+ */
+export const EXTERIOR_CONTINUITY =
+  'Same first light, same muted palette and same colour temperature as the reference image. A ' +
+  'dense but entirely generic financial district: no recognisable skyline, no identifiable tower, ' +
+  'no landmark of any real city. Camera drifting at the slowest possible speed, no shake.';
+
+/** Every interior shot carries this, so separate generations stay one world. */
 export const CONTINUITY =
   'Same building, same dawn light, same muted palette as the reference image. Consistent colour ' +
   'temperature throughout. Camera on a locked tripod or the slowest possible dolly, no handheld, ' +
@@ -26,6 +48,8 @@ export interface FilmShot {
   motion: string;
   /** Shots 1, 4 and 6 carry the people and cut to a 30s version on their own. */
   keep30: boolean;
+  /** Replaces CONTINUITY. The aerials use it: they are not in the building. */
+  continuity?: string;
 }
 
 export const SHOTS: FilmShot[] = [
@@ -138,12 +162,45 @@ export const SHOTS: FilmShot[] = [
       'composition settle back exactly to the reference frame by the final frame.',
     keep30: true,
   },
+  {
+    n: 9,
+    id: 'hero-09-skyline',
+    name: 'Skyline, first light',
+    still:
+      'A high aerial view over a dense financial district at first light, looking slightly down ' +
+      'across a forest of glass and stone towers that recedes to a wide river and a flat horizon. ' +
+      'Low sun catches the east faces of the towers in long warm bands while the streets between ' +
+      'them are still in deep blue shadow. Low cloud lies across the far distance. No figures.',
+    motion:
+      'The camera drifts forward and very slightly downward at the slowest possible speed, as if ' +
+      'from a helicopter holding station. Nothing else moves but the light, which creeps across ' +
+      'the tower faces, and the cloud, which is almost still. No people, no traffic detail.',
+    keep30: false,
+    continuity: EXTERIOR_CONTINUITY,
+  },
+  {
+    n: 10,
+    id: 'hero-10-aerial',
+    name: 'Blocks, straight down',
+    still:
+      'A straight-down aerial directly above dense city blocks at blue hour. Rooftops, courtyards ' +
+      'and the lit lines of streets read as a geometric pattern, the towers falling away from the ' +
+      'centre of the frame in strict symmetry. Street lighting picks out the grid in small warm ' +
+      'points against cool blue-grey concrete. Entirely abstract. No figures.',
+    motion:
+      'The camera holds directly overhead and rotates about its own axis at the slowest ' +
+      'perceptible speed, less than a few degrees across the shot. The street lights hold steady. ' +
+      'Nothing else moves.',
+    keep30: false,
+    continuity: EXTERIOR_CONTINUITY,
+  },
 ];
 
-export const stillPrompt = (shot: FilmShot): string => `${shot.still} ${CONTINUITY} ${HOUSE_LOOK}`;
+export const stillPrompt = (shot: FilmShot): string =>
+  `${shot.still} ${shot.continuity ?? CONTINUITY} ${HOUSE_LOOK}`;
 
 export const motionPrompt = (shot: FilmShot): string =>
-  `${shot.motion} ${CONTINUITY} No camera movement beyond what is described, no zoom, no cuts, ` +
+  `${shot.motion} ${shot.continuity ?? CONTINUITY} No camera movement beyond what is described, no zoom, no cuts, ` +
   `no faces in focus, no text. ${HOUSE_LOOK}`;
 
 /** Budget for the film alone, retries included. See docs/HERO-FILM.md section 8. */

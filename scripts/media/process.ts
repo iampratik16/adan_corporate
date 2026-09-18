@@ -12,7 +12,7 @@
  */
 import sharp from 'sharp';
 import { execFile } from 'node:child_process';
-import { mkdir, readdir, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -117,38 +117,21 @@ async function processFilm(id: string, sourceFile: string): Promise<string[]> {
       mp4,
     ]);
 
-    const webm = path.join(OUT, `${id}-${width}.webm`);
-    await run('ffmpeg', [
-      '-y',
-      '-i',
-      sourceFile,
-      '-an',
-      '-vf',
-      `scale=${width}:-2,${FFMPEG_GRADE}`,
-      '-c:v',
-      'libvpx-vp9',
-      '-crf',
-      String(crf + 2),
-      '-b:v',
-      '0',
-      '-row-mt',
-      '1',
-      '-deadline',
-      'good',
-      '-cpu-used',
-      '2',
-      webm,
-    ]);
+    // H.264 only. A VP9 WebM was emitted here too, and listed first in the
+    // markup, until WebKit was actually tested: it reports that it can decode
+    // VP9, commits to the WebM, parses the metadata and then never renders a
+    // frame, without raising an error anything can catch. See
+    // docs/DECISIONS.md section 21. Any WebM from an earlier run is removed
+    // rather than left in public/ for nothing to serve.
+    await rm(path.join(OUT, `${id}-${width}.webm`), { force: true });
 
-    for (const f of [mp4, webm]) {
-      const { size } = await stat(f);
-      const mb = size / 1_000_000;
-      const cap = width === 1920 ? 3 : 1.5;
-      console.log(
-        `  ${path.basename(f).padEnd(34)} ${mb.toFixed(2)} MB  ${mb <= cap ? 'within' : 'OVER'} the ${cap} MB budget`,
-      );
-      written.push(path.relative(ROOT, f));
-    }
+    const { size } = await stat(mp4);
+    const mb = size / 1_000_000;
+    const cap = width === 1920 ? 3 : 1.5;
+    console.log(
+      `  ${path.basename(mp4).padEnd(34)} ${mb.toFixed(2)} MB  ${mb <= cap ? 'within' : 'OVER'} the ${cap} MB budget`,
+    );
+    written.push(path.relative(ROOT, mp4));
   }
 
   // Frames for the quality-control pass: the brief requires inspecting 0, 2, 4, 6 and 8 seconds.
@@ -200,6 +183,16 @@ async function main(): Promise<void> {
     for (const file of await readdir(filmDir)) {
       if (!file.endsWith('.mp4')) continue;
       const id = file.replace(/\.mp4$/, '');
+
+      // The hero film belongs to assemble-hero.ts, which cuts it from eight
+      // generated shots and writes the same filenames this loop would. Both
+      // pipelines owning `hero-film-<width>.mp4` meant a routine media:process
+      // run replaced a 13.8-second cut with a single 8-second clip, and nothing
+      // said so. Refuse the name rather than race for it.
+      if (id === 'hero-film' || id === 'hero-loop') {
+        console.log(`  skip   ${id} (owned by scripts/media/assemble-hero.ts)`);
+        continue;
+      }
       if (only.length && !only.includes(id)) continue;
       console.log(`  film   ${id}`);
       await processFilm(id, path.join(filmDir, file));

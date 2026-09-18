@@ -13,7 +13,7 @@ import { Portrait } from '@/components/ui/Portrait';
 import { MeridianField } from '@/components/home/MeridianField';
 import { CapabilityGroups } from '@/components/expertise/CapabilityGroups';
 import { PillarIndex } from '@/components/expertise/PillarIndex';
-import { PillarPicture } from '@/components/expertise/PillarPicture';
+import { Picture } from '@/components/shared/Picture';
 import { pillarImage } from '@/lib/pillar-media';
 
 /** The most relevant deals, not all of them. The full record is /transactions. */
@@ -106,7 +106,7 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
       {/* --- The opening image, full bleed. AI & Digital has none by design. --- */}
       {image ? (
         <div className="h-[clamp(240px,42vw,560px)] w-full overflow-hidden bg-stone-100">
-          <PillarPicture image={image} alt={pillar.imageAlt ?? ''} sizes="100vw" priority />
+          <Picture image={image} alt={pillar.imageAlt ?? ''} sizes="100vw" priority />
         </div>
       ) : (
         <div

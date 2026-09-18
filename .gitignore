@@ -11,3 +11,10 @@ next-env.d.ts
 /.playwright
 /.playwright-mcp
 /.review
+
+# Seam-check frames. Written full-res by verifySeam in assemble-hero.ts on every
+# run, 4.7 MB a pair, and regenerated whenever the film is. The jpg frames beside
+# them ARE committed: check-media-contrast.ts reads them to set the hero scrim.
+/media/qc/*/*-seam-*.png
+/media/qc/*/*-first.png
+/media/qc/*/*-last.png

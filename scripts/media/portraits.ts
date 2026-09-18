@@ -11,10 +11,22 @@
  *   1. Find the red ring by colour and take its bounding box. That is the
  *      circle. Fall back to the bounding box of non-white content where a
  *      source has no ring.
- *   2. Crop the largest 4:5 rectangle that fits INSIDE the circle, inset past
- *      the ring, so the ring is removed entirely rather than masked.
- *   3. Greyscale, then normalise each one towards a common mean so 29 portraits
- *      from 29 different shoots sit at one tonal level.
+ *   2. Crop a SQUARE just inside the ring. Rendered with a 50% border radius,
+ *      so the visible circle sits inside the ring and the square's corners,
+ *      which would still carry it, are clipped.
+ *   3. Normalise each one towards a common mean so portraits from as many
+ *      different shoots sit at one tonal level.
+ *
+ * THEY USED TO BE GREYSCALE. That was the right call for a set of sources this
+ * uneven: converting hid the fact that they were shot on different days, in
+ * different rooms, by different people, against backgrounds ranging from a
+ * studio wall to a garden. The client asked for colour.
+ *
+ * So the tone matching stays and the conversion goes. The exposure gain is
+ * still MEASURED on a greyscale copy, because luma is what should be matched
+ * across a set; it is simply applied to the colour image now. What the greyscale
+ * was covering will be visible, and the answer to that is a consistent portrait
+ * shoot, which is already an open question in docs/CLIENT-QUESTIONS.md.
  *
  * Output widths stop at 320. The inscribed rectangle is only about 237px wide,
  * so anything beyond that is upscaling a face and calling it a portrait. A
@@ -30,7 +42,19 @@ const OUT = path.join(ROOT, 'public/media/people');
 
 /** Widths the source genuinely supports. */
 const WIDTHS = [240, 320] as const;
-const RATIO = 4 / 5;
+/*
+ * 1, not 4/5. The portraits are circles now, and that is a resolution decision
+ * as much as a design one.
+ *
+ * The sources ARE circular avatars. Cropping the largest 4:5 rectangle that
+ * fits inside one throws away most of it: that rectangle is only 0.625 of the
+ * circle's diameter across, which is why 27 of 29 portraits were being upscaled.
+ * A square crop displayed as a circle uses the whole diameter, so the same
+ * source yields about 1.6x the width. The square's own corners fall outside the
+ * circle and would show ring, but `border-radius` clips them away before anyone
+ * sees them.
+ */
+const RATIO = 1;
 /** Target mean luminance, so every portrait sits at one tonal level. */
 const TARGET_MEAN = 138;
 
@@ -95,9 +119,25 @@ async function process(slug: string, file: string) {
 
   // Inset past the ring itself, then take the inscribed 4:5 rectangle:
   // for a circle of diameter d, w = d / sqrt(1 + (5/4)^2) = d / 1.6008.
-  const diameter = Math.min(circle.width, circle.height) * 0.94;
-  const cropWidth = Math.floor(diameter / Math.sqrt(1 + (1 / RATIO) ** 2));
-  const cropHeight = Math.floor(cropWidth / RATIO);
+  /*
+   * 0.86 of the detected diameter.
+   *
+   *
+   * The visible circle is the one inscribed in the square crop, so its radius
+   * is half the crop side. 0.86 puts that at 0.43 of the detected diameter,
+   * which clears a ring measuring roughly 4 to 6 per cent of it on these
+   * sources. The square's corners still carry ring and background; the 50%
+   * border radius in Portrait.tsx is what removes them.
+   *
+   * This was 0.94 of a 4:5 rectangle, whose four corners sit ON the circle by
+   * definition and therefore landed inside the ring. Four red triangles were
+   * baked into every portrait, and nobody saw them for weeks because the
+   * pipeline then converted to greyscale and the ring went the same mid-grey as
+   * the background. They appeared the moment colour was turned on.
+   */
+  const diameter = Math.min(circle.width, circle.height) * 0.86;
+  const cropWidth = Math.floor(diameter);
+  const cropHeight = cropWidth;
   const centreX = circle.left + circle.width / 2;
   // Sit slightly above centre: faces read better with more room below the chin
   // than above the crown.
@@ -116,11 +156,13 @@ async function process(slug: string, file: string) {
   const mean = stats.channels[0]?.mean ?? TARGET_MEAN;
   const gain = Math.max(0.8, Math.min(1.25, TARGET_MEAN / Math.max(mean, 1)));
 
+  // No .greyscale() here, deliberately. The gain above was measured on a
+  // greyscale copy, which is the right way to match exposure across a set, and
+  // is applied to the colour image.
   const graded = () =>
     sharp(file)
       .flatten({ background: '#ffffff' })
       .extract({ left, top, width: cropWidth, height: cropHeight })
-      .greyscale()
       .linear(gain, 6) // matched exposure, shadows lifted off pure black
       .modulate({ brightness: 1 });
 
@@ -192,6 +234,16 @@ async function main(): Promise<void> {
       '',
       '/** Widths actually emitted. The source avatars do not support more. */',
       `export const portraitWidths = ${JSON.stringify([...WIDTHS])} as const;`,
+      '',
+      '/**',
+      ' * Cache key for every portrait URL, stamped at the end of this run.',
+      ' *',
+      ' * /media is served `immutable` for a year and these filenames never change,',
+      ' * so a browser that has seen one version of a portrait will not ask for',
+      ' * another. Re-processing the set in colour changed every file on disk and',
+      ' * nothing on screen until this existed. Appended as `?v=` by Portrait.tsx.',
+      ' */',
+      `export const portraitsVersion = '${Date.now().toString(36)}';`,
       '',
       `export const portraits: Record<string, PortraitAsset> = ${JSON.stringify(portraits, null, 2)};`,
       '',

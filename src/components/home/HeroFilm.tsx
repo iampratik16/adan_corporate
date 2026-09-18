@@ -3,53 +3,64 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface FilmSources {
-  /** Tier 2: the 8-second seamless loop. What most visitors ever see. */
-  loop: string[];
-  /** Tier 3: the full 60 seconds. Desktop, wide, unmetered, motion allowed. */
+  /** The film at 1920, for a wide desktop. */
   full: string[];
-  /** The 9:16 loop, for a phone held upright. */
-  portrait: string[];
+  /** The same film at 1280, for everything narrower. */
+  fullNarrow: string[];
 }
 
 const PAUSE_KEY = 'adan:hero-film-paused';
-/** Give up on the full film after this and keep looping. */
-const FULL_FILM_TIMEOUT = 15_000;
-/** Cross-fade length when the full film takes over from the loop. */
-const SWAP_MS = 400;
 
 /**
- * The hero film, delivered in three tiers. See docs/HERO-FILM.md section 7.
+ * The hero film. One video element, playing as soon as it can.
  *
- *   1. the poster, rendered by the server as a plain <img>. The LCP element.
- *   2. an 8-second loop, requested once the poster has painted.
- *   3. the full 60 seconds, fetched in the background and swapped in at a loop
- *      boundary, but only on a desktop-shaped, unmetered, motion-allowing client.
+ * WHAT THIS USED TO BE. Three tiers: the poster, a loop of the film's opening
+ * shot, and the film itself fetched in the background and cross-faded in at a
+ * frame the loop was already holding. That was the right design for a
+ * 60-second film weighing 8.8 MB, where showing a reader something before the
+ * film arrived was worth the machinery.
  *
- * The swap happens at the end of a loop cycle rather than mid-play, so the cut
- * lands where the film already returns to its first frame and the cross-fade has
- * nothing to hide. If the film has not arrived within fifteen seconds it is
- * abandoned and the loop simply continues, which nobody notices.
+ * The film is now a 13.8-second cut weighing 1.17 MB at 1280, and the loop it
+ * was hiding behind weighed 0.4 MB. The whole apparatus of loop, seek,
+ * cross-fade, `canplaythrough` and a fifteen-second abandon timeout existed to
+ * save about half a megabyte, and it cost: two videos decoding at once, a swap
+ * that replayed the opening shot twice, a pause control that disappeared at the
+ * moment it was pressed, and a film that took nine seconds to reach the screen.
+ * Every one of those was a real bug and every one lived in the tiering.
  *
- * The pause control is always present, keyboard reachable, and its state
- * survives navigation in sessionStorage: a reader who turns the film off should
- * not have to turn it off again on every page they come back to.
+ * So the tiering is gone. The poster paints, the film loads, the film plays.
+ *
+ * THE PORTRAIT TIER IS GONE TOO. It was a separate 9:16 clip of a corridor,
+ * built by a different pipeline and never re-cut, so a phone was still being
+ * served footage that appears nowhere in the film. `object-cover` crops the one
+ * film for a narrow viewport instead.
  */
 export function HeroFilm({ sources }: { sources: FilmSources }) {
-  const loopRef = useRef<HTMLVideoElement>(null);
-  const fullRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const [mounted, setMounted] = useState(false);
-  const [portrait, setPortrait] = useState(false);
-  const [loopReady, setLoopReady] = useState(false);
-  const [wantFull, setWantFull] = useState(false);
-  const [fullReady, setFullReady] = useState(false);
-  const [showingFull, setShowingFull] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [srcs, setSrcs] = useState<string[]>([]);
   const [paused, setPaused] = useState(false);
   const [failed, setFailed] = useState(false);
 
-  /* --- Decide what, if anything, to load. ----------------------------------- */
+  /**
+   * The client asked us not to move anything, or not to spend their data.
+   *
+   * Not the same as `paused`, which is a choice about this film. This is a
+   * standing preference about the whole machine, so nothing is fetched and no
+   * `<video>` is mounted until the reader explicitly asks for one.
+   */
+  const [withheld, setWithheld] = useState(false);
+
+  /** Runnable twice: once on load, where it may withhold, and again on consent. */
+  const decide = useCallback(() => {
+    // 1920 is roughly three times the bytes of 1280, and below a 1600px
+    // viewport it is downscaled on arrival, so it is used above that only.
+    setSrcs(window.innerWidth >= 1600 ? sources.full : sources.fullNarrow);
+  }, [sources.full, sources.fullNarrow]);
+
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const connection = (
       navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
     ).connection;
@@ -57,25 +68,29 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
     const slow =
       connection?.effectiveType !== undefined && /(^|-)[23]g$/.test(connection.effectiveType);
 
-    // Reduced motion or a metered connection means the poster is the hero.
-    if (reduced || saveData || slow) return;
-
+    // One frame, not an idle callback. This used to wait for
+    // requestIdleCallback with a 2000ms timeout, which is what a third tier
+    // fetched in the background can afford and what a film that is the hero
+    // cannot. A frame is enough to keep the state out of the effect body, and
+    // is imperceptible.
     const start = () => {
-      const isPortrait =
-        window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches &&
-        sources.portrait.length > 0;
-      setPortrait(isPortrait);
+      // REDUCED MOTION NO LONGER WITHHOLDS THE FILM. The client asked three
+      // times for the hero to play on load and twice reported it as broken when
+      // it did not, which is what reduced motion was doing on their machine.
+      // That is their call to make about their own site and it is recorded in
+      // docs/DECISIONS.md section 28, along with what it costs.
+      //
+      // A metered or slow connection still withholds, because that is a
+      // different question: it is about somebody's data bill, not about motion,
+      // and 1.2 MB of video on a 2G link is a cost they did not agree to.
+      if (saveData || slow) {
+        setWithheld(true);
+        setPaused(true);
+        setMounted(true);
+        return;
+      }
 
-      // The full film is a desktop luxury: fine pointer, real width, and a
-      // connection that is either good or unmeasurable.
-      const roomy =
-        window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-        window.innerWidth >= 1024 &&
-        !isPortrait &&
-        (connection?.effectiveType === undefined || connection.effectiveType === '4g') &&
-        sources.full.length > 0;
-      setWantFull(roomy);
-
+      decide();
       try {
         setPaused(window.sessionStorage.getItem(PAUSE_KEY) === '1');
       } catch {
@@ -84,52 +99,18 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
       setMounted(true);
     };
 
-    if (typeof window.requestIdleCallback === 'function') {
-      const handle = window.requestIdleCallback(start, { timeout: 2000 });
-      return () => window.cancelIdleCallback(handle);
-    }
-    const handle = window.setTimeout(start, 900);
-    return () => clearTimeout(handle);
-  }, [sources.full.length, sources.portrait.length]);
+    const frame = requestAnimationFrame(start);
+    return () => cancelAnimationFrame(frame);
+  }, [decide]);
 
-  /* --- Abandon the full film if it does not turn up. ------------------------ */
+  /* --- Play when it can, and stop when nobody is looking. ------------------- */
   useEffect(() => {
-    if (!wantFull || fullReady) return;
-    const handle = window.setTimeout(() => setWantFull(false), FULL_FILM_TIMEOUT);
-    return () => clearTimeout(handle);
-  }, [wantFull, fullReady]);
-
-  /* --- Swap at a loop boundary, never mid-play. ----------------------------- */
-  useEffect(() => {
-    const loop = loopRef.current;
-    const full = fullRef.current;
-    if (!loop || !full || !fullReady || showingFull) return;
-
-    const onTime = () => {
-      if (!loop.duration || loop.duration - loop.currentTime > SWAP_MS / 1000 + 0.1) return;
-      loop.removeEventListener('timeupdate', onTime);
-      void full.play().catch(() => {});
-      setShowingFull(true);
-    };
-    loop.addEventListener('timeupdate', onTime);
-    return () => loop.removeEventListener('timeupdate', onTime);
-  }, [fullReady, showingFull]);
-
-  /* --- Pause off screen, when hidden, and when asked. ----------------------- */
-  const active = useCallback(
-    () => (showingFull ? fullRef.current : loopRef.current),
-    [showingFull],
-  );
-
-  useEffect(() => {
-    if (!mounted) return;
-    const node = loopRef.current;
-    if (!node) return;
+    if (!mounted || withheld) return;
+    const video = videoRef.current;
+    if (!video) return;
 
     let onScreen = true;
     const sync = () => {
-      const video = active();
-      if (!video) return;
       if (onScreen && !paused && !document.hidden) void video.play().catch(() => {});
       else video.pause();
     };
@@ -141,7 +122,7 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
       },
       { threshold: 0.15 },
     );
-    observer.observe(node);
+    observer.observe(video);
     document.addEventListener('visibilitychange', sync);
     sync();
 
@@ -149,11 +130,19 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
       observer.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [mounted, paused, active]);
+  }, [mounted, withheld, paused, ready]);
 
   const toggle = () => {
     const next = !paused;
     setPaused(next);
+
+    // Pressing play is the consent a withheld film was waiting for. The sizing
+    // decision runs now, because on load we deliberately did not make one.
+    if (!next && withheld) {
+      setWithheld(false);
+      decide();
+    }
+
     try {
       window.sessionStorage.setItem(PAUSE_KEY, next ? '1' : '0');
     } catch {
@@ -163,68 +152,57 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
 
   if (failed) return null;
 
-  const loopSources = portrait ? sources.portrait : sources.loop;
-
   return (
     <>
-      {mounted && (
+      {mounted && !withheld && srcs.length > 0 && (
         <video
-          ref={loopRef}
+          ref={videoRef}
           muted
           loop
+          autoPlay
           playsInline
-          preload="none"
-          aria-hidden="true"
-          tabIndex={-1}
-          onCanPlay={() => setLoopReady(true)}
-          onError={() => setFailed(true)}
-          className="absolute inset-0 size-full object-cover transition-opacity duration-[900ms] ease-out-quart"
-          style={{ opacity: loopReady && !showingFull ? 1 : 0 }}
-        >
-          {loopSources.map((src) => (
-            <source key={src} src={src} type={src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
-          ))}
-        </video>
-      )}
-
-      {mounted && wantFull && (
-        <video
-          ref={fullRef}
-          muted
-          loop
-          playsInline
+          // `auto`, not `none`. There is no lighter tier behind this one any
+          // more, so anything that delays the fetch is time the hero spends as
+          // a still for no benefit. The poster is already painted and is the
+          // LCP element; these bytes were never on that path.
           preload="auto"
           aria-hidden="true"
           tabIndex={-1}
-          onCanPlayThrough={() => setFullReady(true)}
-          onError={() => setWantFull(false)}
-          className="absolute inset-0 size-full object-cover"
-          style={{
-            opacity: showingFull ? 1 : 0,
-            transition: `opacity ${SWAP_MS}ms var(--ease-out-quart)`,
-          }}
+          onCanPlay={() => setReady(true)}
+          onError={() => setFailed(true)}
+          className="absolute inset-0 size-full object-cover transition-opacity duration-700 ease-out-quart"
+          style={{ opacity: ready ? 1 : 0 }}
         >
-          {sources.full.map((src) => (
-            <source key={src} src={src} type={src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+          {srcs.map((src) => (
+            <source key={src} src={src} type="video/mp4" />
           ))}
         </video>
       )}
 
-      {mounted && loopReady && (
+      {/*
+        NO VISIBLE CONTROL. Asked for twice, and this is what it costs.
+
+        WCAG 2.2.2, Pause Stop Hide, is a Level A criterion and this film meets
+        every condition it names: it starts on its own, runs longer than five
+        seconds, and is presented in parallel with the headline. A mechanism to
+        stop it is required, and axe cannot detect its absence, so removing the
+        control outright would have been a silent conformance failure that the
+        whole test suite would have passed.
+
+        So the button is gone from the page and kept in the tab order. It is
+        `sr-only` until focused, at which point it appears where it always was.
+        A mouse user never sees it, which is what was asked for; a keyboard user
+        and a screen reader still have the mechanism the criterion requires.
+
+        If it should go entirely, delete this block, and know that the site then
+        fails 2.2.2 and that CLAUDE.md's stated budget is WCAG 2.2 AA.
+      */}
+      {mounted && (
         <button
           type="button"
           onClick={toggle}
-          className="absolute right-[var(--spacing-gutter)] bottom-8 z-20 flex items-center gap-2 border border-white/40 px-3 py-2 text-micro text-white backdrop-blur-[2px] transition-colors duration-ui hover:border-white hover:bg-white/10"
+          className="sr-only z-20 focus-visible:not-sr-only focus-visible:absolute focus-visible:right-[var(--spacing-gutter)] focus-visible:bottom-8 focus-visible:flex focus-visible:items-center focus-visible:gap-2 focus-visible:border focus-visible:border-white focus-visible:bg-white/10 focus-visible:px-3 focus-visible:py-2 focus-visible:text-micro focus-visible:text-white focus-visible:backdrop-blur-[2px]"
         >
-          {paused ? (
-            <svg width="9" height="11" viewBox="0 0 9 11" aria-hidden="true">
-              <path d="M0 0l9 5.5L0 11z" fill="currentColor" />
-            </svg>
-          ) : (
-            <svg width="8" height="11" viewBox="0 0 8 11" aria-hidden="true">
-              <path d="M0 0h2.5v11H0zM5.5 0H8v11H5.5z" fill="currentColor" />
-            </svg>
-          )}
           {paused ? 'Play film' : 'Pause film'}
         </button>
       )}

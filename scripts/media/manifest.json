@@ -5,7 +5,7 @@
     "videos": 12
   },
   "spent": {
-    "images": 24,
+    "images": 41,
     "videos": 4
   },
   "entries": [
@@ -519,6 +519,312 @@
       },
       "timestamp": "2026-09-18T09:41:20.112Z",
       "file": "media/originals/stills/contact-take2.png",
+      "kept": false
+    },
+    {
+      "id": "pillar-ai-digital",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A dark data hall photographed as architecture, not as technology. A single aisle of tall ranked equipment cabinets runs away from camera in strict perspective, their doors a regular grid of fine perforations. Hundreds of very small cool indicator points recede down the aisle, far too small to read as lights and reading instead as a texture. The floor is dark and slightly reflective. One warm highlight catches a brushed metal frame in the near foreground. Cold, quiet, immaculately kept, and entirely empty of people. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "3:2",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T12:20:24.466Z",
+      "file": "media/originals/stills/pillar-ai-digital-take1.png",
+      "kept": false
+    },
+    {
+      "id": "pillar-ai-digital",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A dark data hall photographed as architecture, not as technology. A single aisle of tall ranked equipment cabinets runs away from camera in strict perspective, their doors a regular grid of fine perforations. Hundreds of very small cool indicator points recede down the aisle, far too small to read as lights and reading instead as a texture. The floor is dark and slightly reflective. One warm highlight catches a brushed metal frame in the near foreground. Cold, quiet, immaculately kept, and entirely empty of people. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "3:2",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T12:20:53.203Z",
+      "file": "media/originals/stills/pillar-ai-digital-take2.png",
+      "kept": false
+    },
+    {
+      "id": "audience-companies",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A tall modern stone and glass office tower seen steeply from below at street level, framed through the sunlit leaves of a street tree filling the near foreground. High clear blue sky. The leaves are soft and slightly translucent, the building sharp behind them. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "1:1",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:39:14.750Z",
+      "file": "media/originals/stills/audience-companies-take1.png",
+      "kept": false
+    },
+    {
+      "id": "audience-companies",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A tall modern stone and glass office tower seen steeply from below at street level, framed through the sunlit leaves of a street tree filling the near foreground. High clear blue sky. The leaves are soft and slightly translucent, the building sharp behind them. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "1:1",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:39:52.360Z",
+      "file": "media/originals/stills/audience-companies-take2.png",
+      "kept": false
+    },
+    {
+      "id": "audience-funds",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A handsome nineteenth-century stone townhouse frontage with tall windows and a wrought iron balcony, seen from across a quiet garden square in full summer leaf. One anonymous figure in a dark suit walks a gravel path, small in the frame and far from camera, face not visible. Benches and mown grass in the foreground. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "1:1",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:40:27.367Z",
+      "file": "media/originals/stills/audience-funds-take1.png",
+      "kept": false
+    },
+    {
+      "id": "audience-funds",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A handsome nineteenth-century stone townhouse frontage with tall windows and a wrought iron balcony, seen from across a quiet garden square in full summer leaf. One anonymous figure in a dark suit walks a gravel path, small in the frame and far from camera, face not visible. Benches and mown grass in the foreground. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "1:1",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:41:04.960Z",
+      "file": "media/originals/stills/audience-funds-take2.png",
+      "kept": false
+    },
+    {
+      "id": "audience-professionals",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A carved classical stone cornice and arched window filling the left of the frame, with a cluster of modern glass towers rising behind and beyond it in bright daylight. The old masonry is sharp and warm, the towers cooler and slightly further away. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "1:1",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:41:37.192Z",
+      "file": "media/originals/stills/audience-professionals-take1.png",
+      "kept": false
+    },
+    {
+      "id": "audience-professionals",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A carved classical stone cornice and arched window filling the left of the frame, with a cluster of modern glass towers rising behind and beyond it in bright daylight. The old masonry is sharp and warm, the towers cooler and slightly further away. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "1:1",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:42:05.933Z",
+      "file": "media/originals/stills/audience-professionals-take2.png",
+      "kept": false
+    },
+    {
+      "id": "insight-career",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A wide pale stone staircase rising towards a tall bright window, seen from the foot of the flight. Daylight falls across the treads in broad bands. A brass handrail catches the light. Nobody present. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:42:37.975Z",
+      "file": "media/originals/stills/insight-career-take1.png",
+      "kept": false
+    },
+    {
+      "id": "insight-commodities",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "Rows of rolled steel coils standing in a clean sunlit yard, receding in strict perspective. Bright overcast daylight, cool grey metal with faint blue and amber oxidation. Purely geometric, industrial and orderly. Nobody present. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:43:12.265Z",
+      "file": "media/originals/stills/insight-commodities-take1.png",
+      "kept": false
+    },
+    {
+      "id": "insight-purpose",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A quiet Japanese garden in bright morning light: raked gravel, a few placed stones and a maple in fresh green leaf, with a low timber fence behind. Calm, spare and open. Nobody present. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:43:54.292Z",
+      "file": "media/originals/stills/insight-purpose-take1.png",
+      "kept": false
+    },
+    {
+      "id": "insight-identity",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A flat wall of clean office glazing filling the frame, reflecting a bright sky and the roofline of a neighbouring building. One anonymous figure is faintly reflected walking across the panes, out of focus and unidentifiable. Almost abstract. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "16:9",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:44:30.546Z",
+      "file": "media/originals/stills/insight-identity-take1.png",
+      "kept": false
+    },
+    {
+      "id": "network-1",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "Two anonymous colleagues in dark suits standing at a floor-to-ceiling window high in an office, looking out over a sunlit modern city. Seen from behind and slightly to one side, faces not visible. Bright daylight floods in and the room is in soft shadow. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "4:5",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:45:03.615Z",
+      "file": "media/originals/stills/network-1-take1.png",
+      "kept": false
+    },
+    {
+      "id": "network-1",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "Two anonymous colleagues in dark suits standing at a floor-to-ceiling window high in an office, looking out over a sunlit modern city. Seen from behind and slightly to one side, faces not visible. Bright daylight floods in and the room is in soft shadow. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "4:5",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:45:32.441Z",
+      "file": "media/originals/stills/network-1-take2.png",
+      "kept": false
+    },
+    {
+      "id": "network-2",
+      "take": 1,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A long polished dark timber boardroom table running away from camera, its surface reflecting a wall of bright windows and a sunlit city beyond. Empty leather chairs along both sides. Nobody present. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "4:5",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:46:05.760Z",
+      "file": "media/originals/stills/network-2-take1.png",
+      "kept": false
+    },
+    {
+      "id": "network-2",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "A long polished dark timber boardroom table running away from camera, its surface reflecting a wall of bright windows and a sunlit city beyond. Empty leather chairs along both sides. Nobody present. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "4:5",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T15:46:37.485Z",
+      "file": "media/originals/stills/network-2-take2.png",
+      "kept": false
+    },
+    {
+      "id": "statement",
+      "take": 2,
+      "kind": "still",
+      "model": "gemini-3-pro-image",
+      "location": "global",
+      "prompt": "Three anonymous figures in dark suits standing talking in the bright atrium of a modern office, seen from the far side of the space and from behind and to one side, so no face is readable. Daylight floods down from a glazed roof onto a pale stone floor. They are small in a tall frame and the architecture holds most of it. Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, architectural composition, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look.",
+      "parameters": {
+        "responseModalities": ["IMAGE"],
+        "imageConfig": {
+          "aspectRatio": "3:2",
+          "imageSize": "2K"
+        }
+      },
+      "timestamp": "2026-09-18T17:17:03.685Z",
+      "file": "media/originals/stills/statement-take2.png",
       "kept": false
     }
   ]

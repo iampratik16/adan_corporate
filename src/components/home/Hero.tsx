@@ -1,13 +1,14 @@
 import Link from 'next/link';
-import { HeroFilm } from './HeroFilm';
+import { HeroFilm, type FilmSources } from './HeroFilm';
 
 /**
  * The hero.
  *
  * Centred, in the manner of the reference: the film does the work and the line
- * sits quietly on top of it. The headline is deliberately well below the page's
- * other display sizes. A banner-sized H1 competes with the film; a statement-
- * sized one lets the film be the hero, which is the point of shooting one.
+ * sits on top of it. The headline is set by .hero-h1 in globals.css, which owns
+ * every typographic property, so no size, leading or measure utility belongs on
+ * the element: a utility would beat the class and the rule would silently not
+ * apply.
  *
  * The poster is a plain <img> with fetchPriority rather than next/image: the
  * asset is already graded and encoded to AVIF at five widths by
@@ -20,38 +21,55 @@ import { HeroFilm } from './HeroFilm';
  */
 export function Hero({
   poster,
-  portraitPoster,
   blurDataURL,
   film,
 }: {
-  poster: { src: string; widths: number[] };
-  portraitPoster?: { widths: number[] };
+  poster: { id: string; src: string; widths: number[]; v: string };
   blurDataURL: string;
-  film: { loop: string[]; full: string[]; portrait: string[] };
+  // Imported rather than restated: a second copy of this shape is how the 1280
+  // rung got added in one place and silently dropped in the other.
+  film: FilmSources;
 }) {
-  const srcSet = (ext: 'avif' | 'webp', id = 'hero-still', widths = poster.widths) =>
-    widths.map((w) => `/media/${id}-${w}.${ext} ${w}w`).join(', ');
+  // The poster's media id is passed in rather than hard-coded: it is normally
+  // `hero-poster`, which assemble-hero.ts extracts from frame 0 of the film, and
+  // falls back to `hero-still` only where the film has not been built.
+  // Every poster URL carries the same `?v=`, so a re-cut invalidates the whole
+  // srcSet at once. Without it the browser keeps last week's poster for a year:
+  // /media is served immutable and these names never change. See
+  // src/lib/media-version.ts.
+  const q = poster.v ? `?v=${poster.v}` : '';
+  const srcSet = (ext: 'avif' | 'webp', id = poster.id, widths = poster.widths) =>
+    widths.map((w) => `/media/${id}-${w}.${ext}${q} ${w}w`).join(', ');
 
   return (
     <section className="relative isolate flex min-h-[min(100svh,940px)] flex-col items-center justify-center overflow-hidden text-center">
-      <div className="absolute inset-0 z-0 bg-ink">
+      {/*
+        No `z-0` here, deliberately.
+
+        A z-index on a positioned element creates a stacking context, and this
+        wrapper holding one trapped everything inside it, including the film's
+        pause control. That control asks for `z-20` to sit above the headline's
+        `z-10`, but a z-20 inside a z-0 context is still just z-0 from the
+        outside, so the headline block covered it. The button rendered, read as
+        visible, and could not be clicked anywhere the text block reached,
+        which on a laptop at 720 to 800px tall is most of the hero.
+
+        Without a z-index this div creates no context, it still paints under
+        the headline because it comes first in the DOM, and the control's z-20
+        finally means what it says.
+      */}
+      <div className="absolute inset-0 bg-ink">
         <picture className="absolute inset-0 block size-full">
-          {portraitPoster && (
-            <>
-              <source
-                media="(orientation: portrait) and (max-width: 820px)"
-                type="image/avif"
-                srcSet={srcSet('avif', 'hero-still-portrait', portraitPoster.widths)}
-                sizes="100vw"
-              />
-              <source
-                media="(orientation: portrait) and (max-width: 820px)"
-                type="image/webp"
-                srcSet={srcSet('webp', 'hero-still-portrait', portraitPoster.widths)}
-                sizes="100vw"
-              />
-            </>
-          )}
+          {/*
+            NO PORTRAIT POSTER. There was a 9:16 crop of a lobby here for a
+            phone held upright, and a matching 9:16 film behind it. Both are
+            gone: the poster is now frame 0 of the delivered film and the film
+            is one 16:9 cut, so a portrait pair would have painted a lobby and
+            then played a skyline, which is the mismatch the extracted poster
+            exists to prevent. `object-cover` crops the one poster and the one
+            film identically. A portrait re-cut of the four shots would be the
+            way to bring it back. See docs/DECISIONS.md section 27.
+          */}
           <source type="image/avif" srcSet={srcSet('avif')} sizes="100vw" />
           <source type="image/webp" srcSet={srcSet('webp')} sizes="100vw" />
           <img
@@ -86,9 +104,25 @@ export function Hero({
       </div>
 
       <div className="on-ink container-site relative z-10 flex flex-col items-center pt-28 pb-28">
-        <h1 className="max-w-[17ch] font-hero text-hero leading-[1.08] tracking-[-0.012em] text-white">
+        {/*
+          Three authored lines, not two.
+
+          The break has to be authored because each line is its own clipped box
+          that rises on its own delay, and globals.css already carries the
+          nth-of-type(3) delay for a third. At the old 72px the line fell in two;
+          at 104px inside a 16ch measure it falls in three, and leaving the old
+          two-span split in place put two rendered lines inside the first mask,
+          so half the headline rose as one block and the stagger broke.
+
+          text-wrap: balance still earns its place on narrow viewports, where a
+          span can wrap again inside its own mask.
+        */}
+        <h1 className="hero-h1 text-white">
           <span className="line-mask">
-            <span>Cross-border corporate finance</span>
+            <span>Cross-border</span>
+          </span>
+          <span className="line-mask">
+            <span>corporate finance</span>
           </span>
           <span className="line-mask">
             <span>for the mid-market.</span>

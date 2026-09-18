@@ -29,6 +29,7 @@ const insightsData = [
     summary:
       'Raju Venkataraman spent 32 years in corporate roles, including CFO and Head of Development at Disney South East Asia, before moving into executive coaching and leadership training. In this radio interview he sets out the five decisions he rates as the best of that career.',
     pillars: ['strategy-leadership'],
+    image: 'insight-career',
     texture: '/media/texture-01.avif',
     external:
       'https://omny.fm/shows/money-fm-893/weekends-ex-disney-cfo-raju-venkataramans-5-best-c?in_playlist=money-fm-893!weekend-mornings-with-jason-dasey',
@@ -42,6 +43,7 @@ const insightsData = [
     summary:
       'A review of several high-profile losses in commodities trading and what caused them. Kieran Bourke works back from each failure to the controls a second-line market risk function needs if it is to contain losses of that kind.',
     pillars: ['risk-governance'],
+    image: 'insight-commodities',
     texture: '/media/texture-02.avif',
     external:
       'https://www.linkedin.com/pulse/few-cases-commodities-market-risk-management-kieran-bourke/',
@@ -55,6 +57,7 @@ const insightsData = [
     summary:
       'Ikigai, the Japanese idea of a reason for being, is often linked to both longevity and contentment. Keshav Adya asks what yours is, and invites readers to answer with their own experience.',
     pillars: ['strategy-leadership'],
+    image: 'insight-purpose',
     texture: '/media/texture-03.avif',
     external:
       'https://www.linkedin.com/posts/cadya_thezymurgistdiaries-growthmindset-leadership-activity-6518504918066696192-0xON',
@@ -68,6 +71,7 @@ const insightsData = [
     summary:
       'Most people put off examining their lives until a crisis forces the question. Raju Venkataraman argues that knowing how to live matters at least as much as knowing how to make a living.',
     pillars: ['strategy-leadership'],
+    image: 'insight-identity',
     texture: '/media/texture-04.avif',
     external: 'https://www.linkedin.com/pulse/so-what-do-you-raju-venkataraman/',
   },

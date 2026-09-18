@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { pillars } from '@content/pillars';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { MeridianField } from '@/components/home/MeridianField';
-import { PillarPicture } from '@/components/expertise/PillarPicture';
+import { Picture } from '@/components/shared/Picture';
 import { pillarImage } from '@/lib/pillar-media';
 
 export const metadata: Metadata = {
@@ -50,7 +50,7 @@ export default function ExpertisePage() {
                   }
                 >
                   <div data-reveal className="aspect-4/3 overflow-hidden bg-stone-100">
-                    <PillarPicture
+                    <Picture
                       image={image}
                       alt={pillar.imageAlt ?? ''}
                       sizes="(min-width: 1024px) 46vw, 100vw"

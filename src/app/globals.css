@@ -39,15 +39,10 @@
      Two families. Newsreader carries every display size and the
      figures; Hanken Grotesk carries body, UI and all tabular data. */
   --font-display: var(--font-newsreader), 'Newsreader', Georgia, serif;
-  /* The hero headline only. Never used for a figure: it has no tabular numerals. */
-  --font-hero: var(--font-hero-face), 'Instrument Serif', Georgia, serif;
   --font-sans: var(--font-archivo), 'Archivo', system-ui, sans-serif;
 
   /* Fluid scale. Lower bound = 390px, upper = 1600px. */
   --text-display-1: clamp(2.75rem, 1.05rem + 6.95vw, 7rem); /*  44 -> 112 */
-  /* The hero sits well below the page's other display sizes on purpose: the
-     film carries the weight and the line reads as a statement, not a banner. */
-  --text-hero: clamp(2.125rem, 1.19rem + 3.83vw, 4.5rem); /*  34 ->  72 */
   --text-display-2: clamp(2.125rem, 1.28rem + 3.47vw, 4.25rem); /*  34 ->  68 */
   --text-display-3: clamp(1.75rem, 1.29rem + 1.88vw, 2.9rem); /*  28 ->  46 */
   --text-display-4: clamp(1.375rem, 1.13rem + 1vw, 1.985rem); /*  22 ->  32 */
@@ -458,16 +453,15 @@
     }
   }
 
-  /* --- People portraits: greyscale to colour, 300ms. --- */
+  /* --- People portraits: colour, and no filter on them. ---------------
+     They were greyscaled here and revealed in colour on hover, on top of
+     being greyscaled again in the image pipeline. The client asked for
+     colour; scripts/media/portraits.ts stopped converting them, and this
+     rule went on rendering colour files as grey, which looked exactly like
+     the pipeline change had not worked. Two greyscales in two places is
+     one too many to remember. The pipeline owns the tone now. --- */
   .portrait {
-    filter: grayscale(1) contrast(1.02);
-    transition:
-      filter 300ms var(--ease-out-quart),
-      transform 600ms var(--ease-out-expo);
-  }
-  .group:hover .portrait,
-  .group:focus-within .portrait {
-    filter: grayscale(0) contrast(1);
+    transition: transform 600ms var(--ease-out-expo);
   }
 
   /* --- A meridian: the recurring structural line of the concept. --- */
@@ -499,21 +493,86 @@
    ============================================================ */
 
 @layer components {
+  /* --- The hero headline. ---------------------------------------------
+     A class rather than utilities, because it is one element with one job
+     and six declarations that only make sense together. It sits in this
+     layer beside .hero-scrim-wash and .line-mask, which is where this file
+     keeps hero-specific styling.
+
+     It owns the whole appearance, so the element carries no typographic
+     utilities at all. A components-layer class cannot beat a utility, so
+     leaving `text-hero` or `leading-[1.08]` on the h1 would silently win
+     and the rule would look like it had not applied.
+
+     The size has been down once already. It went to 104px so the line read
+     as the page's masthead statement rather than as another heading, and
+     at that size it crowded the film it sits on. 76px is the settlement.
+
+     opsz 72 is the reason Newsreader can carry this at all; see
+     src/lib/fonts.ts. Without the axis loaded it is an inert declaration,
+     not a fallback.
+
+     text-wrap: balance is inherited from the base h1 rule and restated
+     here at the point of use. With the two .line-mask spans the break is
+     already authored, so it governs only the wrap inside a span on a
+     narrow viewport. --- */
+  .hero-h1 {
+    font-family: var(--font-newsreader), Newsreader, Georgia, serif;
+    font-variation-settings: 'opsz' 72;
+    /* 40 -> 76. Was clamp(2.75rem, 7vw, 6.5rem), 44 to 104, which filled most
+       of the frame on a laptop and left the film peering out around it. The
+       client asked for it smaller; this also puts it back under
+       --text-display-1, so the display scale keeps its order. */
+    font-size: clamp(2.5rem, 5.1vw, 4.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+    max-width: 16ch;
+  }
+
+  /* --- The figure row. -------------------------------------------------
+     Four cards whose values line up with each other even when one label
+     wraps to two lines and the others do not. Subgrid is the mechanism:
+     each card spans the row's two tracks and adopts them, so a longer
+     label cannot push its own value below the other three. Where subgrid
+     is unsupported this degrades to an ordinary grid and the cards align
+     at their tops, which is what it did before.
+
+     The value is sized here rather than with the shared `text-figure`
+     token. That token was drawn for a two-column about page; four columns
+     of it leave about 256px of inner width at 1440, and "US$5bn" and
+     "20 years" both need more than that at 80px. --- */
+  .figure-row {
+    grid-template-rows: auto auto;
+  }
+  .figure-row > * {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+  .figure-row-value {
+    font-size: clamp(2.5rem, 1.6rem + 3.1vw, 4rem); /* 40 -> 64 */
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+
   .hero-scrim-wash {
     background: linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--color-ink) 62%, transparent) 0%,
-      color-mix(in srgb, var(--color-ink) 30%, transparent) 26%,
-      color-mix(in srgb, var(--color-ink) 34%, transparent) 62%,
-      color-mix(in srgb, var(--color-ink) 72%, transparent) 100%
+      color-mix(in srgb, var(--color-ink) 66%, transparent) 0%,
+      color-mix(in srgb, var(--color-ink) 44%, transparent) 24%,
+      color-mix(in srgb, var(--color-ink) 48%, transparent) 62%,
+      color-mix(in srgb, var(--color-ink) 76%, transparent) 100%
     );
   }
 
   .hero-scrim-pool {
     background: radial-gradient(
-      ellipse 70% 52% at 50% 54%,
-      color-mix(in srgb, var(--color-ink) 58%, transparent) 0%,
-      transparent 72%
+      ellipse 80% 60% at 50% 50%,
+      color-mix(in srgb, var(--color-ink) 72%, transparent) 0%,
+      color-mix(in srgb, var(--color-ink) 50%, transparent) 48%,
+      transparent 80%
     );
   }
 
@@ -611,6 +670,8 @@
     opacity: 1 !important;
     transform: none !important;
   }
+  /* Print stays grey: this is a briefing note going through an office
+     laser printer, where a colour headshot becomes a dark smudge. */
   .portrait {
     filter: grayscale(1) !important;
   }

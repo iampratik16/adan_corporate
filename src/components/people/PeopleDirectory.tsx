@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import type { PersonGroup } from '@content/schema';
 import { FilterGroup, ResultCount } from '@/components/shared/FilterBar';
-import { LocalTime } from '@/components/ui/LocalTime';
 import { Portrait } from '@/components/ui/Portrait';
 
 /**
@@ -218,31 +217,41 @@ export function PeopleDirectory({
                   </h2>
                   <span className="tabular text-micro text-stone-500">{members.length}</span>
                 </div>
-                <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+                {/*
+                  Centred cards with a round portrait, after the leadership grid
+                  on mckinsey.com: role small above the name, name in the display
+                  serif, everything on the centre line.
+
+                  The city and the local clock came off the card. `city / local
+                  time` under a face is a nice thing to know about an office and
+                  a strange thing to know about a person; both are still on the
+                  profile this links to, and LocalTime still runs on the contact
+                  page, where a reader is deciding whether it is a reasonable
+                  hour to call.
+                */}
+                <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {members.map((person) => (
                     <li key={person.slug}>
-                      <Link href={`/people/${person.slug}`} className="group block">
+                      <Link
+                        href={`/people/${person.slug}`}
+                        className="group flex h-full flex-col items-center border border-stone-200 bg-white px-5 py-8 text-center transition-colors duration-ui hover:border-stone-300"
+                      >
                         <div
-                          className="overflow-hidden"
+                          className="w-[min(62%,168px)]"
                           style={{ viewTransitionName: `portrait-${person.slug}` }}
                         >
                           <Portrait
                             person={person}
-                            sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 46vw"
-                            className="transition-transform duration-[900ms] ease-out-expo group-hover:scale-[1.02]"
+                            sizes="168px"
+                            className="transition-transform duration-[900ms] ease-out-expo group-hover:scale-[1.03]"
                           />
                         </div>
-                        <h3 className="mt-4 border-t border-stone-200 pt-3 text-body">
-                          <span className="link-underline">{person.name}</span>
-                        </h3>
-                        <p className="mt-1 text-micro text-stone-500">
+                        <p className="mt-7 text-micro text-stone-500">
                           {person.roleDetail ?? person.role}
                         </p>
-                        <p className="mt-1.5 text-micro text-stone-500">
-                          {person.city}
-                          <span aria-hidden="true"> &middot; </span>
-                          <LocalTime timeZone={person.timeZone} showDot={false} />
-                        </p>
+                        <h3 className="mt-1.5 font-display text-display-4 leading-[1.15]">
+                          <span className="link-underline">{person.name}</span>
+                        </h3>
                       </Link>
                     </li>
                   ))}

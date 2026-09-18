@@ -26,14 +26,14 @@ interface NavPillar {
 export function MobileSheet({
   open,
   onOpenChange,
-  utility,
   primary,
+  secondary,
   pillars,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
-  utility: NavLink[];
   primary: NavLink[];
+  secondary: NavLink[];
   pillars: NavPillar[];
 }) {
   return (
@@ -96,8 +96,14 @@ export function MobileSheet({
                 ))}
             </div>
 
+            {/*
+              The sheet keeps the four destinations the bar dropped. The bar is
+              short of horizontal room; a sheet is not short of vertical room,
+              and People, Insights, Podcast and Careers would otherwise exist
+              on a phone only at the very bottom of the footer.
+            */}
             <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
-              {utility.map((link) => (
+              {secondary.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="link-underline text-small text-stone-700">
                     {link.label}

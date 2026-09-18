@@ -53,14 +53,28 @@ interface Target {
   label: string;
 }
 
-/** Selectors for every piece of text on this site that sits over media. */
+/**
+ * Selectors for every piece of text on this site that sits over media.
+ *
+ * The header ones are the reason this script has teeth. The masthead is glass
+ * at 52% over the hero film, and what a reader sees through it is whatever the
+ * film is doing at that second, so every item in the bar is text over media
+ * even though none of it looks like it.
+ *
+ * All four header entries are now ink or near it. That is not an accident: the
+ * bar could only go from 82% to 52% once the stone-700 second row was gone, and
+ * if a lighter weight ever returns to the masthead this script is what should
+ * refuse it.
+ */
 const TARGETS: Target[] = [
   { selector: 'section:first-of-type h1', label: 'hero H1' },
   { selector: 'section:first-of-type h1 + p', label: 'hero supporting line' },
   { selector: 'section:first-of-type a.link-underline', label: 'hero quiet link' },
   { selector: 'section:first-of-type a.btn', label: 'hero primary action' },
-  { selector: 'header a[href="/transactions"]', label: 'header nav link' },
-  { selector: 'header a[href="/insights"]', label: 'header utility link' },
+  { selector: 'header nav[aria-label="Primary"] a[href="/expertise"]', label: 'header nav, first' },
+  { selector: 'header nav[aria-label="Primary"] a[href="/contact"]', label: 'header nav, last' },
+  { selector: 'header a[href="/contact"] .link-underline', label: 'header CTA' },
+  { selector: 'header a[aria-label] > span > span', label: 'header wordmark' },
 ];
 
 const HIDE =
@@ -91,24 +105,34 @@ async function main(): Promise<void> {
 
   const measured = await page.evaluate(
     (targets: Target[]) =>
-      targets
-        .map(({ selector, label }) => {
-          const el = document.querySelector(selector);
-          if (!el) return null;
-          const r = el.getBoundingClientRect();
-          const s = getComputedStyle(el);
-          return {
-            label,
-            rect: { x: r.x, y: r.y, width: r.width, height: r.height },
-            colour: s.color,
-            ownBackground: s.backgroundColor,
-            fontSize: parseFloat(s.fontSize),
-            weight: Number(s.fontWeight) || 400,
-          };
-        })
-        .filter((t): t is NonNullable<typeof t> => t !== null),
+      targets.map(({ selector, label }) => {
+        const el = document.querySelector(selector);
+        // A selector that stops matching is reported, not skipped. This used
+        // to return null and get filtered away, so removing an element from
+        // the header deleted its contrast check instead of failing it, and
+        // the audit quietly got smaller every time the markup changed.
+        if (!el) return { label, missing: true as const, selector };
+        const r = el.getBoundingClientRect();
+        const s = getComputedStyle(el);
+        return {
+          label,
+          missing: false as const,
+          selector,
+          rect: { x: r.x, y: r.y, width: r.width, height: r.height },
+          colour: s.color,
+          ownBackground: s.backgroundColor,
+          fontSize: parseFloat(s.fontSize),
+          weight: Number(s.fontWeight) || 400,
+        };
+      }),
     TARGETS,
   );
+
+  const missing = measured.filter((t) => t.missing);
+  for (const t of missing) {
+    console.error(`  MISSING  ${t.label.padEnd(24)} no element matches ${t.selector}`);
+  }
+  if (missing.length) process.exitCode = 1;
 
   const withText = await capture(page, false);
   const withoutText = await capture(page, true);
@@ -121,9 +145,10 @@ async function main(): Promise<void> {
   // that never reaches the screen: measuring against it fails text that is in
   // fact legible. Swapping the frame into the poster <img> and re-shooting keeps
   // the scrims, the header and the page's own colour management in the result.
-  // Both tiers: the 60-second film first, because the brief sets the scrim from
-  // the brightest frame of the film, and the 8-second loop, which is what most
-  // visitors actually see.
+  // Both tiers: the film first, because the brief sets the scrim from the
+  // brightest frame of the film, and then the loop, which is what most visitors
+  // actually see. The `-60` in the directory name is historical: it held the
+  // 60-second cut's frames and now holds the 13.8s one's.
   for (const dir of ['media/qc/hero-film-60', 'media/qc/hero-film']) {
     const qc = path.join(ROOT, dir);
     if (!existsSync(qc)) continue;
@@ -165,6 +190,8 @@ async function main(): Promise<void> {
   console.log(`  ${'-'.repeat(78)}`);
 
   for (const target of measured) {
+    if (target.missing) continue; // already reported above, and already fatal
+
     // An element painting its own opaque surface is not text on media: what is
     // behind it never shows through. Those pairs belong to the token audit in
     // scripts/check-contrast.ts.

@@ -44,6 +44,13 @@ whole piece, and the maths lands exactly on target:
 total = 59.8s
 ```
 
+> **As built, the arithmetic is slightly different.** Both delivered films had open seams, so §6's
+> tail-to-head crossfade was applied to each, and that costs 0.6s of running time. The inter-shot
+> crossfade moved to 0.55s to pay for it: `64 - 7x0.55 - 0.6 = 59.55s`, inside §9's window, where
+> keeping 0.6s throughout would have landed on 59.20s and missed it. See `docs/DECISIONS.md` §16.
+> `scripts/media/assemble-hero.ts` is the authority; it computes the duration from the graph and
+> now fails the run if the seam does not close.
+
 Use extend only as a fallback if a single shot needs to run longer than 8 seconds, and record that in
 `docs/DECISIONS.md`.
 

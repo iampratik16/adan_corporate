@@ -8,13 +8,13 @@ export interface MediaAsset {
 }
 
 export const media: Record<string, MediaAsset> = {
-  contact: {
-    widths: [960, 1280, 1920],
+  statement: {
+    widths: [640, 960, 1280],
     blurDataURL:
-      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPxl6tlIsp6UisAgBkCMJYwC7ACFSZIgd+rzAAP7uiDDv+mGV6+oU4lM9f+hL4e/m2o8Z3POW0NAAAA==',
-    width: 2752,
-    height: 1536,
-    aspectRatio: '2752 / 1536',
+      'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQBACdASoUAA0APxl2s1CspySisAgBkCMJYwC7AB33WOiZRhcoODmrAAD+ZgqDWjUS8DCW0CK89JDay/Jw1LtO0SUzIA8CW3g9j4AA',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
   'hero-still': {
     widths: [640, 960, 1280, 1920, 2560],
@@ -24,13 +24,13 @@ export const media: Record<string, MediaAsset> = {
     height: 1536,
     aspectRatio: '2752 / 1536',
   },
-  'hero-still-portrait': {
-    widths: [640, 960, 1280],
+  'hero-poster': {
+    widths: [640, 960, 1280, 1920],
     blurDataURL:
-      'data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQBQCdASoUACQAPxl6slKsp6SisBVaqZAjCWMAvndcglvaxFzL8bVpifzzVudz+VeZ1n9nT+rCAP7bwjexTVqxO9KlSUfL6wDcSNBWzVvkrqahdtpjTZlOrX6fmnH8Fid1ojey3G6v9Dt5fQODlg50aCaJXukAAAA=',
-    width: 1536,
-    height: 2752,
-    aspectRatio: '1536 / 2752',
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAwCdASoUAAsAPxl0sVCspqSisAgBkCMJZwDLLCHcb5GuoQL1gAAA9940bP3uz2tF/okWjMoDlaoVCU6BAAAA',
+    width: 1920,
+    height: 1080,
+    aspectRatio: '1920 / 1080',
   },
   'pillar-corporate-finance': {
     widths: [640, 960, 1280, 1920],
@@ -64,6 +64,14 @@ export const media: Record<string, MediaAsset> = {
     height: 1696,
     aspectRatio: '2528 / 1696',
   },
+  'pillar-ai-digital': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoUAA0APxl0sVCspqSisAgBkCMJZQAAQtq9zFL2xK8AAP7mXPlFldAPaQaH7oX/IS8k/KjM/yIs9uC2AAA=',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
+  },
   'about-1': {
     widths: [640, 960, 1280, 1920],
     blurDataURL:
@@ -79,6 +87,86 @@ export const media: Record<string, MediaAsset> = {
     width: 2528,
     height: 1696,
     aspectRatio: '2528 / 1696',
+  },
+  contact: {
+    widths: [960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPxl6tlIsp6UisAgBkCMJYwC7ACFSZIgd+rzAAP7uiDDv+mGV6+oU4lM9f+hL4e/m2o8Z3POW0NAAAA==',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
+  },
+  'audience-companies': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBQCdASoUABQAPxl4tFMspyUisBgIAZAjCWYAuzLHQTT4dLluBDL5S/ik8Qnh0ayQAP6Cf3pgoqPImOlmxg9P6sTj1Y5cKfSrTRtmvTvVeAYNMTH6MW8paQsDL7adGHMC1aG/YAA=',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
+  },
+  'audience-funds': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwBACdASoUABQAPxl4slEspySisAgBkCMJQBkTBBiDm1EiH/PA/L1I5G7dyl0QAP7TICthbAu184LsvPsRDbkkrZkT57Ydu1IaKzIx41yGZBzGkXcQWVV+5PcatISeW0AAAA==',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
+  },
+  'audience-professionals': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQBACdASoUABQAPxl2tlMspqUisBgIAZAjCWMAACWh8+FbNskDw8hiVnqPoChjgADMdp+1B7Z+5TYO8XbkUbvH2Rp7g3Dp9G+TyyW8pMrtMy/ZPZOh1+nO8RiEibUY/Ni8AA==',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
+  },
+  'insight-career': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoUAAsAPxl2s1EspySisAgBkCMJZQC/OA+MqcLvmTAAAADfVCr0itHRk8CgJ51Ar6cDlcxXG2qEw41qoG6LrQAA',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
+  },
+  'insight-commodities': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQBACdASoUAAsAPxl0sVCspqSisAgBkCMJYwDG9CIGa2/fBxSeaViWgAD8zMruhGLCuEoSeg4rlGXkFYX2ZDV6jNRm1KFwoA5gAA==',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
+  },
+  'insight-purpose': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoUAAsAPxl4s1EspySisAgBkCMJQBAAALgevkpaw3ZFoAD3HvKgldtvMYy9kFcY6gzftD8ycPgRbOODepWuXvn4Lx9gAA==',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
+  },
+  'insight-identity': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwBACdASoUAAsAPxl2s1EspySisAgBkCMJYgCdAB9S4FUK8uU4Oot8ngAA/fadQtpz43axdf6aDKg74svIYieBnddWCMUfAGgw9HwHW1lrrqwA',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
+  },
+  'network-1': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACQBACdASoUABkAPxl6slCsqCSisAgBkCMJYwC2+2QDTqvV9+1Q54zLS3CPJkAA/eKaFTUCgCumQI7x7Pf7JrYuIqGQ2NMyLkRcxa8MInMRJQ0x5McuY0iINr51qplKR8laWQ6NWHh4JPHNdwHdWTbLiwS5rfOa/rePVZVAAAA=',
+    width: 1856,
+    height: 2304,
+    aspectRatio: '1856 / 2304',
+  },
+  'network-2': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADQBACdASoUABkAPxl0slCspqSisBgMAZAjCUAW9wHhNfb3foOVtmZdPPQzWr+yAAD+1ZfcTFfO/JUPqO1/d/Vvll3XnVnOfPNLTKlK60Cd6yoYMCqOYS7AZvSIZW6BT1jxKbkPxuRiAA==',
+    width: 1856,
+    height: 2304,
+    aspectRatio: '1856 / 2304',
   },
   'texture-01': {
     widths: [400, 800, 1200],

@@ -1,12 +1,13 @@
-import { Archivo, Instrument_Serif, Newsreader } from 'next/font/google';
+import { Archivo, Newsreader } from 'next/font/google';
 
 /**
  * Two families, self-hosted through next/font so there is no render-blocking
  * request to a third party and no layout shift when they arrive.
  *
- * Newsreader carries every display size, the pull quotes and the large figures.
- * It has a true optical-size axis, so a 112px H1 and a 20px quotation are drawn
- * with different contrast rather than one outline scaled twice.
+ * Newsreader carries the hero, every display size, the pull quotes and the
+ * large figures. It has a true optical-size axis, so a 104px headline and a
+ * 20px quotation are drawn with different contrast rather than one outline
+ * scaled twice.
  *
  * Archivo replaces the brief's Hanken Grotesk, which ships no `tnum`: its
  * feature list is ccmp dnom frac kern liga locl mark mkmk numr. This site sets
@@ -17,17 +18,24 @@ export const newsreader = Newsreader({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-newsreader',
-  // No optical-size axis, and no italic.
+  // The optical-size axis is back, and the hero is why.
   //
-  // Both were declared and both were measured. The italic was never used by any
-  // component. The opsz axis was used, but a two-axis variable font is 129 kB
-  // against 57 kB for one axis, and that 72 kB sits on the critical path of
-  // every page. Dropping it moved mobile Lighthouse from 91 to 93 and LCP from
-  // 3.5s to 3.2s, against a difference in the letterforms that is only visible
-  // when the two renderings are cropped and stacked.
+  // It was dropped once, on good evidence: a two-axis variable font is 129 kB
+  // against 57 kB for one axis, and dropping it moved mobile Lighthouse 91 to
+  // 93. The argument for dropping it was that the difference in letterforms is
+  // "only visible when the two renderings are cropped and stacked". That was
+  // true when Newsreader's largest appearance was a 112px H2. The hero headline
+  // is now Newsreader at 104px, and opsz is precisely the axis that stops a
+  // reading face from looking like a reading face enlarged: at opsz 72 the
+  // stroke contrast opens up and the serifs sharpen. On the one element a fund
+  // partner looks at first, that is not a crop-and-stack difference.
   //
-  // To put it back: add axes: ['opsz'] here, and re-run
-  // `pnpm check:budgets` and a mobile Lighthouse run before committing.
+  // The 72 kB is part-funded by deleting Instrument Serif, which existed only
+  // to solve this same problem and is now unreferenced: see below. Net cost is
+  // roughly 49 kB. Measured after the change with `pnpm check:budgets`.
+  //
+  // No italic: it was declared, measured, and used by no component.
+  axes: ['opsz'],
   // Preloaded. Dropping the preload to give the LCP image more bandwidth was
   // tried and measured: first contentful paint went from 0.9s to 2.0s, CLS
   // went from 0 to 0.044 as the fallback swapped, and LCP barely moved. The
@@ -46,22 +54,19 @@ export const archivo = Archivo({
   fallback: ['system-ui', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
 });
 
-/**
- * The hero headline only.
+/*
+ * Instrument Serif is gone.
  *
- * Instrument Serif is a display face: higher contrast and more classical than
- * Newsreader, which is drawn for reading at text sizes. At the hero's size it
- * has the character the reference has and Newsreader does not. It carries no
- * `tnum`, so it can never be used for a figure, and it is deliberately scoped
- * to one element rather than made a third general-purpose family.
+ * It was introduced as a third family for the hero headline alone, on the
+ * reasoning that Newsreader is drawn for reading at text sizes and lacks the
+ * character a display line wants. That reasoning was sound and the remedy was
+ * expensive: a whole extra preloaded face, on the critical path of every page,
+ * serving one element.
+ *
+ * Newsreader with its optical-size axis is the cheaper answer to the same
+ * problem, because opsz is the axis that gives a reading face display contrast.
+ * Two axes of one family cost less than one axis of two families, and the page
+ * is now set in a single serif from the hero to the footnotes.
  */
-export const instrumentSerif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  display: 'swap',
-  variable: '--font-hero-face',
-  preload: true,
-  fallback: ['Georgia', 'Times New Roman', 'serif'],
-});
 
-export const fontVariables = `${newsreader.variable} ${archivo.variable} ${instrumentSerif.variable}`;
+export const fontVariables = `${newsreader.variable} ${archivo.variable}`;

@@ -36,7 +36,21 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Generated media is content-addressed by name and never mutates.
+        /*
+         * Immutable for a year, which is only honest because every URL that can
+         * change carries a `?v=` content hash. See src/lib/media-version.ts.
+         *
+         * This used to say "generated media is content-addressed by name and
+         * never mutates", and that was simply not true: `hero-film-1280.mp4`
+         * keeps its name through every re-cut of the film. A browser that had
+         * seen one cut was told never to ask again, so it played a version of
+         * the film that no longer existed on disk, for a year. It was reported
+         * as the hero not updating, twice, and it is invisible from the server
+         * side because the server is serving the right bytes to anyone who asks.
+         *
+         * If you rewrite a file under a name that is already published, its URL
+         * must change too, or nothing will fetch it.
+         */
         source: '/media/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },

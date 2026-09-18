@@ -60,11 +60,30 @@ test.describe('without JavaScript', () => {
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  test('the hero shows its poster and no film', async ({ page }) => {
+  test('the hero poster still paints under reduced motion', async ({ page }) => {
+    // The film now plays here too, by client instruction, but the poster is
+    // still the LCP element and still has to be on screen before it arrives.
     await page.goto('/');
-    await page.waitForTimeout(2500);
-    expect(await page.locator('video').count(), 'film loaded under reduced motion').toBe(0);
     await expect(page.locator('section').first().locator('img').first()).toBeVisible();
+  });
+
+  test('reduced motion no longer withholds the film', async ({ page }) => {
+    // It used to, and the client reported that twice as a broken video before
+    // asking three times for the hero to autoplay. Their call, recorded in
+    // docs/DECISIONS.md section 28. Save-Data and a slow link still withhold,
+    // because those are about somebody's data bill rather than about motion.
+    await page.goto('/');
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() =>
+            Array.from(document.querySelectorAll('section video')).some(
+              (v) => !(v as HTMLVideoElement).paused && (v as HTMLVideoElement).currentTime > 0,
+            ),
+          ),
+        { message: 'the hero film did not autoplay under reduced motion', timeout: 15_000 },
+      )
+      .toBe(true);
   });
 
   test('all content is visible without reveal animations', async ({ page }) => {

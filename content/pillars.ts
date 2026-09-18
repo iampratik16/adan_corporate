@@ -636,7 +636,13 @@ const data = [
     // source but does not appear on the team page roster at all, so he is not listed here.
     // Confirm the leads for this pillar with the partners.
     leads: ['nav-kaplish', 'keshav-adya'],
-    // No photograph for this pillar: the page uses the code-drawn line field.
+    // This pillar had no photograph and used the code-drawn line field. The
+    // client asked for an image; see docs/DECISIONS.md section 18 for why it is
+    // a data hall shot as architecture rather than anything that glows.
+    image: '/media/pillar-ai-digital.avif',
+    imageAlt:
+      'A single aisle of tall equipment cabinets receding into the dark in a data hall, lit only ' +
+      'by the cold points of their indicators.',
     enquirySubject: 'Exploring AI',
   },
 ] satisfies unknown[];

@@ -102,8 +102,17 @@ export const homepageFigures = [
 ] as const;
 
 /**
- * The "as at" footnote under the homepage figures. The old site dates nothing:
- * its counters carry no date and its footer reads "2013 - 2021". A date here
- * would be invented, so this stays a placeholder until the client supplies one.
+ * The "as at" footnote under the homepage figures.
+ *
+ * It read "As at [date to be confirmed by the client]" and the client asked for
+ * it off the page. It is now empty, and FigureRow renders nothing when it is,
+ * so supplying a real date here is all that is needed to put it back.
+ *
+ * NOTHING ABOUT THE FIGURES CHANGED. Three of the four are still
+ * `needsConfirmation` above, with the contradiction that makes them so recorded
+ * in their `sourceNote` and carried into docs/CLIENT-QUESTIONS.md. Taking the
+ * placeholder off the page removed the reminder, not the problem: the old site
+ * gives no date for any of these and its footer stops at 2021, so US$5bn and
+ * "20 years" are still undated claims awaiting a partner.
  */
-export const figuresAsAt = 'As at [date to be confirmed by the client]';
+export const figuresAsAt = '';

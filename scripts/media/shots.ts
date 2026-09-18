@@ -17,12 +17,31 @@ export const HOUSE_LOOK =
   'verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, ' +
   'no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.';
 
+/**
+ * The daylight look, for the homepage card sections only.
+ *
+ * A deliberate departure from HOUSE_LOOK, asked for by the client against the
+ * Rothschild & Co homepage, whose card photography is bright, green and summery
+ * where ours is dawn. It is confined to the three audience cards, the four
+ * insight cards and the two network plates; the hero film, the five pillars and
+ * every other still stay on the house look. See docs/DECISIONS.md section 23,
+ * which also records the cost: these cards will not sit in the same world as
+ * the hero film, and that is the trade the brighter set was chosen for.
+ */
+export const BRIGHT_LOOK =
+  'Full-frame camera, 35mm lens, clear natural daylight under a high blue sky, fresh green ' +
+  'foliage, warm pale stone, crisp and open, gentle contrast, shallow depth of field, ' +
+  'architectural composition, calm and unposed. No text, no signage, no logos, no recognisable ' +
+  'landmarks, no faces in focus, no lens flare, no HDR look.';
+
 export type AspectRatio = '16:9' | '9:16' | '3:2' | '4:5' | '1:1';
 
 export interface StillShot {
   id: string;
   subject: string;
   aspectRatio: AspectRatio;
+  /** Appended instead of HOUSE_LOOK. Only the homepage card sections use this. */
+  look?: string;
   /** How many takes to generate before picking. Budget: 60 image calls total. */
   takes: number;
   /** Widths emitted by process.ts. */
@@ -67,15 +86,26 @@ export const STILLS: StillShot[] = [
     usage: 'Homepage hero poster. This is the LCP element, so it is graded and compressed hardest.',
   },
   {
-    id: 'hero-still-portrait',
+    id: 'hero-poster',
+    /*
+     * NOT GENERATED. scripts/media/assemble-hero.ts writes
+     * media/originals/stills/hero-poster.png as frame 0 of the graded film, and
+     * this entry exists only so process.ts emits the responsive rungs for it.
+     * Running generate.ts against this id would overwrite the extracted frame
+     * with an invented one and silently break the match it exists to guarantee.
+     *
+     * `subject` is here because the type requires it, and describes the frame
+     * the current cut happens to open on.
+     */
     subject:
-      'The same stone and glass lobby at dawn in a tall vertical crop. Raking early light across ' +
-      'pale limestone, one anonymous figure in a dark overcoat crossing in soft motion blur, ' +
-      'full-height glazing with slender vertical mullions, deep shadow at the top of frame.',
-    aspectRatio: '9:16',
-    takes: 2,
-    widths: [640, 960, 1280],
-    usage: 'Hero poster on portrait phones, where the 16:9 crop loses the floor.',
+      'The opening frame of the hero film: a high aerial over a dense financial district at first ' +
+      'light. Placed by assemble-hero.ts, never generated.',
+    aspectRatio: '16:9',
+    takes: 0,
+    // No 2560 rung: the source is a frame of the 1920 film, and process.ts will
+    // not upscale. The generated hero-still had one because it was a 2K render.
+    widths: [640, 960, 1280, 1920],
+    usage: 'The hero poster, and the LCP element. Must equal frame one of the film.',
   },
   {
     id: 'pillar-corporate-finance',
@@ -123,6 +153,20 @@ export const STILLS: StillShot[] = [
     usage: 'Risk & Governance pillar page and the homepage expertise index.',
   },
   {
+    id: 'pillar-ai-digital',
+    subject:
+      'A dark data hall photographed as architecture, not as technology. A single aisle of tall ' +
+      'ranked equipment cabinets runs away from camera in strict perspective, their doors a ' +
+      'regular grid of fine perforations. Hundreds of very small cool indicator points recede ' +
+      'down the aisle, far too small to read as lights and reading instead as a texture. The ' +
+      'floor is dark and slightly reflective. One warm highlight catches a brushed metal frame in ' +
+      'the near foreground. Cold, quiet, immaculately kept, and entirely empty of people.',
+    aspectRatio: '3:2',
+    takes: 2,
+    widths: [640, 960, 1280, 1920],
+    usage: 'AI & Digital pillar page and the homepage expertise index.',
+  },
+  {
     id: 'about-1',
     subject:
       'A tall window at blue hour, beaded with rain on the inside of the glass. Beyond it a harbour ' +
@@ -162,6 +206,129 @@ export const STILLS: StillShot[] = [
     widths: [960, 1280, 1920],
     usage: 'Contact page and the closing contact band.',
   },
+  /* --- Homepage card sections. Daylight, not the house dawn: BRIGHT_LOOK. --- */
+  {
+    id: 'audience-companies',
+    subject:
+      'A tall modern stone and glass office tower seen steeply from below at street level, framed ' +
+      'through the sunlit leaves of a street tree filling the near foreground. High clear blue ' +
+      'sky. The leaves are soft and slightly translucent, the building sharp behind them.',
+    aspectRatio: '1:1',
+    look: BRIGHT_LOOK,
+    takes: 2,
+    widths: [640, 960, 1280],
+    usage: 'Homepage audience card: companies and founders.',
+  },
+  {
+    id: 'audience-funds',
+    subject:
+      'A handsome nineteenth-century stone townhouse frontage with tall windows and a wrought ' +
+      'iron balcony, seen from across a quiet garden square in full summer leaf. One anonymous ' +
+      'figure in a dark suit walks a gravel path, small in the frame and far from camera, face ' +
+      'not visible. Benches and mown grass in the foreground.',
+    aspectRatio: '1:1',
+    look: BRIGHT_LOOK,
+    takes: 2,
+    widths: [640, 960, 1280],
+    usage: 'Homepage audience card: funds and family offices.',
+  },
+  {
+    id: 'audience-professionals',
+    subject:
+      'A carved classical stone cornice and arched window filling the left of the frame, with a ' +
+      'cluster of modern glass towers rising behind and beyond it in bright daylight. The old ' +
+      'masonry is sharp and warm, the towers cooler and slightly further away.',
+    aspectRatio: '1:1',
+    look: BRIGHT_LOOK,
+    takes: 2,
+    widths: [640, 960, 1280],
+    usage: 'Homepage audience card: senior professionals.',
+  },
+  {
+    id: 'statement',
+    subject:
+      'Three anonymous figures in dark suits standing talking in the bright atrium of a modern ' +
+      'office, seen from the far side of the space and from behind and to one side, so no face is ' +
+      'readable. Daylight floods down from a glazed roof onto a pale stone floor. They are small ' +
+      'in a tall frame and the architecture holds most of it.',
+    aspectRatio: '3:2',
+    look: BRIGHT_LOOK,
+    takes: 2,
+    widths: [640, 960, 1280],
+    usage: 'Homepage statement section, beside the standing text.',
+  },
+  {
+    id: 'insight-career',
+    subject:
+      'A wide pale stone staircase rising towards a tall bright window, seen from the foot of the ' +
+      'flight. Daylight falls across the treads in broad bands. A brass handrail catches the ' +
+      'light. Nobody present.',
+    aspectRatio: '16:9',
+    look: BRIGHT_LOOK,
+    takes: 1,
+    widths: [640, 960, 1280],
+    usage: 'Homepage insight card: career decisions.',
+  },
+  {
+    id: 'insight-commodities',
+    subject:
+      'Rows of rolled steel coils standing in a clean sunlit yard, receding in strict perspective. ' +
+      'Bright overcast daylight, cool grey metal with faint blue and amber oxidation. Purely ' +
+      'geometric, industrial and orderly. Nobody present.',
+    aspectRatio: '16:9',
+    look: BRIGHT_LOOK,
+    takes: 1,
+    widths: [640, 960, 1280],
+    usage: 'Homepage insight card: commodities risk.',
+  },
+  {
+    id: 'insight-purpose',
+    subject:
+      'A quiet Japanese garden in bright morning light: raked gravel, a few placed stones and a ' +
+      'maple in fresh green leaf, with a low timber fence behind. Calm, spare and open. Nobody ' +
+      'present.',
+    aspectRatio: '16:9',
+    look: BRIGHT_LOOK,
+    takes: 1,
+    widths: [640, 960, 1280],
+    usage: 'Homepage insight card: purpose and Ikigai.',
+  },
+  {
+    id: 'insight-identity',
+    subject:
+      'A flat wall of clean office glazing filling the frame, reflecting a bright sky and the ' +
+      'roofline of a neighbouring building. One anonymous figure is faintly reflected walking ' +
+      'across the panes, out of focus and unidentifiable. Almost abstract.',
+    aspectRatio: '16:9',
+    look: BRIGHT_LOOK,
+    takes: 1,
+    widths: [640, 960, 1280],
+    usage: 'Homepage insight card: professional identity.',
+  },
+  {
+    id: 'network-1',
+    subject:
+      'Two anonymous colleagues in dark suits standing at a floor-to-ceiling window high in an ' +
+      'office, looking out over a sunlit modern city. Seen from behind and slightly to one side, ' +
+      'faces not visible. Bright daylight floods in and the room is in soft shadow.',
+    aspectRatio: '4:5',
+    look: BRIGHT_LOOK,
+    takes: 2,
+    widths: [640, 960, 1280],
+    usage: 'Homepage network band, left plate.',
+  },
+  {
+    id: 'network-2',
+    subject:
+      'A long polished dark timber boardroom table running away from camera, its surface ' +
+      'reflecting a wall of bright windows and a sunlit city beyond. Empty leather chairs along ' +
+      'both sides. Nobody present.',
+    aspectRatio: '4:5',
+    look: BRIGHT_LOOK,
+    takes: 2,
+    widths: [640, 960, 1280],
+    usage: 'Homepage network band, right plate.',
+  },
   ...TEXTURES.map(([id, subject]): StillShot => ({
     id,
     subject: `A macro material study, filling the frame: ${subject}. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself.`,
@@ -173,34 +340,16 @@ export const STILLS: StillShot[] = [
 ];
 
 export const FILMS: FilmShot[] = [
-  {
-    id: 'hero-film',
-    fromStill: 'hero-still',
-    prompt:
-      'The camera is locked off and does not move. Nothing in the architecture changes. Two or ' +
-      'three anonymous figures in dark overcoats walk slowly across the frame and out of it, ' +
-      'rendered in soft motion blur, never facing camera, never in focus. Reflections of the ' +
-      'street drift slowly across the tall glazing. A shaft of low dawn light creeps almost ' +
-      'imperceptibly across the pale stone floor. Extremely calm and slow. No camera movement, ' +
-      'no zoom, no cuts, no people in focus, no text.',
-    aspectRatio: '16:9',
-    durationSeconds: 8,
-    model: 'veo-3.1-generate-001',
-    usage: 'Homepage hero. Poster is hero-still, so frame one must match it exactly.',
-  },
-  {
-    id: 'hero-film-portrait',
-    fromStill: 'hero-still-portrait',
-    prompt:
-      'The camera is locked off and does not move. One anonymous figure in a dark overcoat walks ' +
-      'slowly across the lower frame in soft motion blur and leaves. Reflections drift slowly ' +
-      'across the tall glazing. Low dawn light creeps almost imperceptibly across pale stone. ' +
-      'No camera movement, no zoom, no cuts, no faces, no text.',
-    aspectRatio: '9:16',
-    durationSeconds: 8,
-    model: 'veo-3.1-fast-generate-001',
-    usage: 'Hero on portrait phones.',
-  },
+  /*
+   * There is no 'hero-film' entry here any more, and there must not be one.
+   *
+   * The homepage hero is built by a different pipeline: eight shots defined in
+   * hero-film.ts, generated by generate-hero.ts, cut and encoded by
+   * assemble-hero.ts. Both pipelines wrote to public/media/hero-film-<width>.mp4,
+   * so `pnpm media:process` would silently replace the assembled cut with a
+   * single 8-second clip, and the only symptom was a hero that looked shorter
+   * than it should. process.ts now refuses that name outright.
+   */
   {
     id: 'pillar-strategy-loop',
     fromStill: 'pillar-strategy',

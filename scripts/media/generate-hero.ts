@@ -1,5 +1,8 @@
 /**
- * Build the 60-second hero film. See docs/HERO-FILM.md.
+ * Generate the hero film's source shots. See docs/HERO-FILM.md.
+ *
+ * All eight are still generated. The delivered cut uses four of them; see CUT
+ * in assemble-hero.ts and docs/DECISIONS.md section 17.
  *
  *   npx tsx scripts/media/generate-hero.ts --stills          # the 7 anchor stills
  *   npx tsx scripts/media/generate-hero.ts --draft           # all 8 on the fast tier

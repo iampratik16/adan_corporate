@@ -93,7 +93,7 @@ async function generateStill(shot: StillShot, take: number, manifest: Manifest):
   if (manifest.spent.images >= BUDGET.images) {
     throw new Error(`Image budget of ${BUDGET.images} generations is spent.`);
   }
-  const prompt = `${shot.subject} ${HOUSE_LOOK}`;
+  const prompt = `${shot.subject} ${shot.look ?? HOUSE_LOOK}`;
   const parameters = {
     responseModalities: ['IMAGE'],
     imageConfig: { aspectRatio: shot.aspectRatio, imageSize: '2K' },

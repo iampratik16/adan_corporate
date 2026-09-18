@@ -1,14 +1,28 @@
 import Link from 'next/link';
 import type { Person } from '@content/schema';
-import { LocalTime } from '@/components/ui/LocalTime';
 import { Portrait } from '@/components/ui/Portrait';
 
 /**
  * People are the product, so they get the space.
  *
- * The two managing partners large, then a rail of partners, then a route to
- * everyone. The portrait morphs into the profile page through a named view
- * transition, which is why each one carries a viewTransitionName.
+ * Laid out after the leadership grid on mckinsey.com that the client supplied:
+ * an even grid of raised cards, the portrait above, the role small above the
+ * name, and the name in the display serif. Everyone is the same size. The
+ * previous version gave the managing partners a large three-up row and then
+ * pushed the partners into a horizontal rail beneath them, which made a
+ * hierarchy the reference does not have and which this firm has not asked to
+ * assert on its homepage.
+ *
+ * The portraits are in colour now. They were greyscaled to hide how uneven the
+ * sources are, which worked and cost the section its warmth; see
+ * scripts/media/portraits.ts and docs/DECISIONS.md section 29. Tone matching
+ * survives, so they still sit at one exposure.
+ *
+ * THE LOCAL CLOCK IS GONE FROM THE CARDS. It read `city / local time` under
+ * every face, which is a nice thing to know about an office and a strange thing
+ * to know about a person. `LocalTime` still runs in the network band and on the
+ * contact page, which is where a reader is deciding whether it is a reasonable
+ * hour to call.
  */
 export function PeopleModule({
   managing,
@@ -19,6 +33,10 @@ export function PeopleModule({
   partners: Person[];
   total: number;
 }) {
+  // Managing partners first, then partners, then stop: eight cards is two full
+  // rows at the widest breakpoint and the section has a route to the rest.
+  const shown = [...managing, ...partners].slice(0, 8);
+
   return (
     <section className="section-y" aria-labelledby="people-heading">
       <div className="container-site">
@@ -35,73 +53,31 @@ export function PeopleModule({
           </Link>
         </div>
 
-        {/* --- Managing partners --- */}
-        <div
-          data-reveal
-          data-reveal-delay="1"
-          className={`mt-14 grid gap-x-12 gap-y-12 ${
-            managing.length >= 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'
-          }`}
-        >
-          {managing.map((person) => (
-            <Link key={person.slug} href={`/people/${person.slug}`} className="group block">
-              <div className="overflow-hidden">
-                <Portrait
-                  person={person}
-                  sizes={
-                    managing.length >= 3
-                      ? '(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 100vw'
-                      : '(min-width: 768px) 44vw, 100vw'
-                  }
-                  className="transition-transform duration-[900ms] ease-out-expo group-hover:scale-[1.02]"
-                />
-              </div>
-              <div className="mt-5 flex items-baseline justify-between gap-4 border-t border-ink pt-4">
-                <div>
-                  <h3 className="font-display text-display-4 leading-[1.15]">
-                    <span className="link-underline">{person.name}</span>
-                  </h3>
-                  <p className="mt-1 text-small text-stone-700">
-                    {person.role}
-                    {person.roleDetail ? `, ${person.roleDetail.toLowerCase()}` : ''}
-                  </p>
+        <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {shown.map((person, index) => (
+            <li
+              key={person.slug}
+              data-reveal
+              data-reveal-delay={String(Math.min(index, 3)) as '0' | '1' | '2' | '3'}
+            >
+              <Link
+                href={`/people/${person.slug}`}
+                className="group flex h-full flex-col items-center border border-stone-200 bg-white px-5 py-8 text-center transition-colors duration-ui hover:border-stone-300"
+              >
+                <div className="w-[min(62%,168px)]">
+                  <Portrait
+                    person={person}
+                    sizes="168px"
+                    className="transition-transform duration-[900ms] ease-out-expo group-hover:scale-[1.03]"
+                  />
                 </div>
-                <p className="shrink-0 text-right text-micro text-stone-500">
-                  {person.city}
-                  <br />
-                  <LocalTime timeZone={person.timeZone} showDot={false} />
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* --- Partner rail --- */}
-        <ul
-          data-reveal
-          className="mt-16 flex snap-x gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          aria-label="Partners"
-        >
-          {partners.map((person) => (
-            <li key={person.slug} className="w-[min(46vw,210px)] shrink-0 snap-start">
-              <Link href={`/people/${person.slug}`} className="group block">
-                <div className="overflow-hidden">
-                  <Portrait person={person} sizes="210px" />
-                </div>
-                <h3 className="mt-3 text-small">
+                <p className="mt-7 text-micro text-stone-500">{person.roleDetail ?? person.role}</p>
+                <h3 className="mt-1.5 font-display text-display-4 leading-[1.15]">
                   <span className="link-underline">{person.name}</span>
                 </h3>
-                <p className="mt-0.5 text-micro text-stone-500">
-                  {person.roleDetail ?? person.role} &middot; {person.city}
-                </p>
               </Link>
             </li>
           ))}
-          <li className="flex w-[min(40vw,180px)] shrink-0 items-center">
-            <Link href="/people" className="link-underline text-body">
-              Everyone
-            </Link>
-          </li>
         </ul>
       </div>
     </section>

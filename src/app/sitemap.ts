@@ -19,8 +19,14 @@ type Entry = MetadataRoute.Sitemap[number];
 type Frequency = NonNullable<Entry['changeFrequency']>;
 
 /**
- * The top-level routes are the navigation. Anything added to site.nav is in the
- * sitemap the same day; the table below only sets its weight.
+ * The top-level routes, and their weights, in one table.
+ *
+ * This used to be built by spreading site.nav, on the reasoning that anything
+ * added to the navigation would appear here the same day. The reverse is the
+ * danger: when the masthead was cut to four links, People, Insights, Podcast
+ * and Careers left the sitemap with it, and a purely visual decision had
+ * quietly deindexed four pages. A route's presence in search is not a function
+ * of whether it earned a slot in the bar.
  */
 const TOP_LEVEL: Record<string, { changeFrequency: Frequency; priority: number }> = {
   '/expertise': { changeFrequency: 'monthly', priority: 0.9 },
@@ -44,10 +50,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   };
 
-  const topLevel: Entry[] = [...site.nav.primary, ...site.nav.utility].map((item) => ({
-    url: url(item.href),
+  const topLevel: Entry[] = Object.entries(TOP_LEVEL).map(([href, weight]) => ({
+    url: url(href),
     lastModified: built,
-    ...(TOP_LEVEL[item.href] ?? { changeFrequency: 'monthly' as const, priority: 0.6 }),
+    ...weight,
   }));
 
   const pillarPages: Entry[] = pillars.map((pillar) => ({

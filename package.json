@@ -12,7 +12,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md,json}\"",
     "test:e2e": "playwright test",
-    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm check:contrast && pnpm test:e2e",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm check:contrast && pnpm test:e2e && pnpm check:media-contrast",
     "media:generate": "tsx scripts/media/generate.ts",
     "media:process": "tsx scripts/media/process.ts",
     "check:contrast": "tsx scripts/check-contrast.ts",

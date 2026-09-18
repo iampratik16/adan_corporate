@@ -56,25 +56,88 @@ test('the skip link is the first thing a keyboard reaches', async ({ page, brows
   expect(focused).toContain('Skip to content');
 });
 
-test('the hero film has a visible pause control once it plays', async ({ page }) => {
+test('the playing hero film can always be stopped from the keyboard', async ({ page }) => {
+  // WCAG 2.2.2 is Level A and this film meets every condition it names: it
+  // starts on its own, runs longer than five seconds, and sits behind the
+  // headline. The client asked for the visible control to go, so the mechanism
+  // is now keyboard-only: sr-only until focused. Asserting that it "is visible"
+  // would fail, and asserting nothing would let the criterion be deleted by
+  // accident, which axe cannot detect.
   await page.goto('/');
-  // The film loads after idle, so allow for it; if it never arrives the poster
-  // stands in, which is a valid outcome and not a failure.
-  const control = page.getByRole('button', { name: /pause film|play film/i });
-  await control.waitFor({ state: 'visible', timeout: 15_000 }).catch(() => {});
-  if (await control.isVisible()) {
-    await expect(control).toBeEnabled();
-  }
+
+  const control = page.getByRole('button', { name: /pause film/i });
+  await control.waitFor({ state: 'attached', timeout: 15_000 }).catch(() => {});
+  if ((await control.count()) === 0) return; // poster-only client, nothing to stop
+
+  await control.focus();
+  await expect(control, 'the stop mechanism is not keyboard reachable').toBeFocused();
+
+  await page.keyboard.press('Enter');
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() =>
+          Array.from(document.querySelectorAll('section video')).every(
+            (v) => (v as HTMLVideoElement).paused,
+          ),
+        ),
+      { message: 'the film kept playing after its control was pressed', timeout: 10_000 },
+    )
+    .toBe(true);
 });
 
-test('the transactions rail never advances on its own', async ({ page }) => {
+test('a reader who paused the film can always start it again', async ({ page }) => {
+  // The pause preference persists in sessionStorage, so this is the state a
+  // reader returns to on every load of that tab once they have stopped the
+  // film. It shipped broken once: the control was gated on the loop's
+  // `canplay`, which never fired while paused, so the hero sat frozen with
+  // nothing on screen to restart it, permanently, for the life of the tab.
+  //
+  // The control is now sr-only until focused, by client instruction, so this
+  // reaches it the way a keyboard user would rather than asserting it is
+  // visible. That is the whole remaining mechanism, which makes it worth a test.
+  await page.addInitScript(() => sessionStorage.setItem('adan:hero-film-paused', '1'));
   await page.goto('/');
-  const rail = page.getByLabel('Selected transactions, scrollable');
-  await rail.scrollIntoViewIfNeeded();
-  const before = await rail.evaluate((el) => el.scrollLeft);
+
+  const control = page.getByRole('button', { name: /play film/i });
+  await expect(control, 'no control to restart a paused film').toBeAttached({ timeout: 15_000 });
+
+  await control.focus();
+  await expect(control).toBeFocused();
+  await page.keyboard.press('Enter');
+
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() =>
+          Array.from(document.querySelectorAll('section video')).some(
+            (v) => !(v as HTMLVideoElement).paused && (v as HTMLVideoElement).currentTime > 0,
+          ),
+        ),
+      { message: 'the film was restarted and its clock never moved', timeout: 15_000 },
+    )
+    .toBe(true);
+});
+
+test('nothing on the homepage advances on its own', async ({ page }) => {
+  // The brief bans carousels that advance by themselves. This used to watch the
+  // transaction rail, which was the only thing on the page that scrolled; that
+  // rail has been replaced by a static grid of insight cards, so the assertion
+  // is now the general one: no horizontally scrollable region moves unasked.
+  await page.goto('/');
   await page.waitForTimeout(3000);
-  const after = await rail.evaluate((el) => el.scrollLeft);
-  expect(after, 'the rail moved without being asked to').toBe(before);
+
+  // Asserted as "everything is still at its start", not as a before/after diff.
+  // The diff version compared two arrays of scrollLeft values and failed on
+  // mobile for a reason that had nothing to do with scrolling: lazily loaded
+  // images land between the samples, more elements end up overflowing, and the
+  // arrays came back different lengths while every value in both was 0.
+  const moved = await page.evaluate(() =>
+    Array.from(document.querySelectorAll<HTMLElement>('*'))
+      .filter((el) => el.scrollWidth > el.clientWidth + 8 && el.scrollLeft !== 0)
+      .map((el) => `${el.tagName.toLowerCase()}.${el.className}`.slice(0, 80)),
+  );
+  expect(moved, 'something scrolled itself without being asked to').toEqual([]);
 });
 
 test('every internal link resolves', async ({ page, request }) => {
