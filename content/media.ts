@@ -8,177 +8,124 @@ export interface MediaAsset {
 }
 
 export const media: Record<string, MediaAsset> = {
-  "contact": {
-    "widths": [
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPxl6tlIsp6UisAgBkCMJYwC7ACFSZIgd+rzAAP7uiDDv+mGV6+oU4lM9f+hL4e/m2o8Z3POW0NAAAA==",
-    "width": 2752,
-    "height": 1536,
-    "aspectRatio": "2752 / 1536"
+  contact: {
+    widths: [960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPxl6tlIsp6UisAgBkCMJYwC7ACFSZIgd+rzAAP7uiDDv+mGV6+oU4lM9f+hL4e/m2o8Z3POW0NAAAA==',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
   },
-  "hero-still": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920,
-      2560
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAAsAPxl4tlGspyUisAgBkCMJYwAAUqUhOKuP5F3s8AAA/uy8wGs/mSTzX/j/83IJF+swHUOCgRg3qYAAAA==",
-    "width": 2752,
-    "height": 1536,
-    "aspectRatio": "2752 / 1536"
+  'hero-still': {
+    widths: [640, 960, 1280, 1920, 2560],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAAsAPxl4tlGspyUisAgBkCMJYwAAUqUhOKuP5F3s8AAA/uy8wGs/mSTzX/j/83IJF+swHUOCgRg3qYAAAA==',
+    width: 2752,
+    height: 1536,
+    aspectRatio: '2752 / 1536',
   },
-  "hero-still-portrait": {
-    "widths": [
-      640,
-      960,
-      1280
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQBQCdASoUACQAPxl6slKsp6SisBVaqZAjCWMAvndcglvaxFzL8bVpifzzVudz+VeZ1n9nT+rCAP7bwjexTVqxO9KlSUfL6wDcSNBWzVvkrqahdtpjTZlOrX6fmnH8Fid1ojey3G6v9Dt5fQODlg50aCaJXukAAAA=",
-    "width": 1536,
-    "height": 2752,
-    "aspectRatio": "1536 / 2752"
+  'hero-still-portrait': {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQBQCdASoUACQAPxl6slKsp6SisBVaqZAjCWMAvndcglvaxFzL8bVpifzzVudz+VeZ1n9nT+rCAP7bwjexTVqxO9KlSUfL6wDcSNBWzVvkrqahdtpjTZlOrX6fmnH8Fid1ojey3G6v9Dt5fQODlg50aCaJXukAAAA=',
+    width: 1536,
+    height: 2752,
+    aspectRatio: '1536 / 2752',
   },
-  "pillar-corporate-finance": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA0APxl4slCspySisAgBkCMJZQAARkxJUaCK/+ggAP7gbmErnbK1C3Ki0pNQRj3/Hl4t7LbRB316R63gAAAA",
-    "width": 2528,
-    "height": 1696,
-    "aspectRatio": "2528 / 1696"
+  'pillar-corporate-finance': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA0APxl4slCspySisAgBkCMJZQAARkxJUaCK/+ggAP7gbmErnbK1C3Ki0pNQRj3/Hl4t7LbRB316R63gAAAA',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
-  "pillar-ma": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABwAwCdASoUAA0APxl2slEspySisAgBkCMJYwAAQc0cq5D/oAAA/uv+nxoMejRUUteuXF9Pw8fedu+yf1JLgAAA",
-    "width": 2528,
-    "height": 1696,
-    "aspectRatio": "2528 / 1696"
+  'pillar-ma': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABwAwCdASoUAA0APxl2slEspySisAgBkCMJYwAAQc0cq5D/oAAA/uv+nxoMejRUUteuXF9Pw8fedu+yf1JLgAAA',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
-  "pillar-strategy": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAA0APxl4slEspySisAgBkCMJYwCw7BjtFZWMRubQrRMAAP7jWiXDh3OFy9gXepZzh+AXQBbuM92+XQwXsHciQ8xFUZgAAAA=",
-    "width": 2528,
-    "height": 1696,
-    "aspectRatio": "2528 / 1696"
+  'pillar-strategy': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAA0APxl4slEspySisAgBkCMJYwCw7BjtFZWMRubQrRMAAP7jWiXDh3OFy9gXepZzh+AXQBbuM92+XQwXsHciQ8xFUZgAAAA=',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
-  "pillar-risk": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAwCdASoUAA0APxl0sVCspqSisAgBkCMJZQCdABi+InNySxJkwAAAzAI9ZXUwKXOtYfxnRWsFcum+uEo9x2q6GgA=",
-    "width": 2528,
-    "height": 1696,
-    "aspectRatio": "2528 / 1696"
+  'pillar-risk': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAwCdASoUAA0APxl0sVCspqSisAgBkCMJZQCdABi+InNySxJkwAAAzAI9ZXUwKXOtYfxnRWsFcum+uEo9x2q6GgA=',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
-  "about-1": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAwCdASoUAA0APxl6slCsqCSisAgBkCMJQBOgAw2lkvEWNy8ZEAD+6Ox8bczEWstb13B7a+H0+yEN6olXhgAA",
-    "width": 2528,
-    "height": 1696,
-    "aspectRatio": "2528 / 1696"
+  'about-1': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACwAwCdASoUAA0APxl6slCsqCSisAgBkCMJQBOgAw2lkvEWNy8ZEAD+6Ox8bczEWstb13B7a+H0+yEN6olXhgAA',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
-  "about-2": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoUAA0APxl2slCspySisAgBkCMJQBWAA6fPqoPQMljuAAD+409DbleaeNuxi1rlLkL9fFNCuJjKZuCBWZS8McAA",
-    "width": 2528,
-    "height": 1696,
-    "aspectRatio": "2528 / 1696"
+  'about-2': {
+    widths: [640, 960, 1280, 1920],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoUAA0APxl2slCspySisAgBkCMJQBWAA6fPqoPQMljuAAD+409DbleaeNuxi1rlLkL9fFNCuJjKZuCBWZS8McAA',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
-  "texture-01": {
-    "widths": [
-      400,
-      800,
-      1200
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUABQAPxl2tlOspqUkMBgIAZAjCWcAwCgQ8KjGCp1LlQAA/q8+c78+VqsQqYgoWubpejcsctr+MTX/ENdgP4ypcUouqkAA",
-    "width": 2048,
-    "height": 2048,
-    "aspectRatio": "2048 / 2048"
+  'texture-01': {
+    widths: [400, 800, 1200],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoUABQAPxl2tlOspqUkMBgIAZAjCWcAwCgQ8KjGCp1LlQAA/q8+c78+VqsQqYgoWubpejcsctr+MTX/ENdgP4ypcUouqkAA',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
   },
-  "texture-02": {
-    "widths": [
-      400,
-      800,
-      1200
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUABQAPxl8sVOsp6QiqA1RkCMJZ2rmWKIKjuhDxMAA/uqR7ycu/1GIC6vZIkj7hAcl0iu0L7xYxQM4DIsS8RwIAAA=",
-    "width": 2048,
-    "height": 2048,
-    "aspectRatio": "2048 / 2048"
+  'texture-02': {
+    widths: [400, 800, 1200],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUABQAPxl8sVOsp6QiqA1RkCMJZ2rmWKIKjuhDxMAA/uqR7ycu/1GIC6vZIkj7hAcl0iu0L7xYxQM4DIsS8RwIAAA=',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
   },
-  "texture-03": {
-    "widths": [
-      400,
-      800,
-      1200
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQBACdASoUABQAPxl+slOsqCQiqA1RkCMJZQDImBEc9MwIGKCUw/vK+JF7MVtpmADOMs6wvwXF/GNUv8mum4q7V75C8fi0L49LY+xRemxYtd6iGTwGHUUd10pqUxfYAAA=",
-    "width": 2048,
-    "height": 2048,
-    "aspectRatio": "2048 / 2048"
+  'texture-03': {
+    widths: [400, 800, 1200],
+    blurDataURL:
+      'data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQBACdASoUABQAPxl+slOsqCQiqA1RkCMJZQDImBEc9MwIGKCUw/vK+JF7MVtpmADOMs6wvwXF/GNUv8mum4q7V75C8fi0L49LY+xRemxYtd6iGTwGHUUd10pqUxfYAAA=',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
   },
-  "texture-04": {
-    "widths": [
-      400,
-      800,
-      1200
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUABQAPw1yrlCsJyQit/VYAYAhiWcAz6APDMAkyLESwRAA/tlAMDWLMdTExy5KaThDk5BI87JfbtKDQ4AAAA==",
-    "width": 2048,
-    "height": 2048,
-    "aspectRatio": "2048 / 2048"
+  'texture-04': {
+    widths: [400, 800, 1200],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUABQAPw1yrlCsJyQit/VYAYAhiWcAz6APDMAkyLESwRAA/tlAMDWLMdTExy5KaThDk5BI87JfbtKDQ4AAAA==',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
   },
-  "texture-05": {
-    "widths": [
-      400,
-      800,
-      1200
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAAAQAwCdASoUABQAPxmEu1asqKYjqAgBkCMJZwCw7BdwNoAA/upyK3582ZRypgIy+AA=",
-    "width": 2048,
-    "height": 2048,
-    "aspectRatio": "2048 / 2048"
+  'texture-05': {
+    widths: [400, 800, 1200],
+    blurDataURL:
+      'data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAAAQAwCdASoUABQAPxmEu1asqKYjqAgBkCMJZwCw7BdwNoAA/upyK3582ZRypgIy+AA=',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
   },
-  "texture-06": {
-    "widths": [
-      400,
-      800,
-      1200
-    ],
-    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUABQAPxl4tVGspyUiqA1RkCMJZwDDcAwvC459+xHdWSAA/uWYcVnWxYocUAij4ul714KaFWGMQAJr9K7v51Lg+LmAAA==",
-    "width": 2048,
-    "height": 2048,
-    "aspectRatio": "2048 / 2048"
-  }
+  'texture-06': {
+    widths: [400, 800, 1200],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoUABQAPxl4tVGspyUiqA1RkCMJZwDDcAwvC459+xHdWSAA/uWYcVnWxYocUAij4ul714KaFWGMQAJr9K7v51Lg+LmAAA==',
+    width: 2048,
+    height: 2048,
+    aspectRatio: '2048 / 2048',
+  },
 };

@@ -150,17 +150,17 @@ cross, open. Everything now passes at 390px and 1440px.
 
 Every change below was measured, not assumed.
 
-| Change | Effect |
-|---|---|
-| Dropped Newsreader's unused italic | fonts 360 kB to 163 kB |
-| Dropped Archivo's unused `wdth` axis | included above |
-| Dropped Newsreader's `opsz` axis | fonts 163 kB to 91 kB; mobile 91 to 93 |
-| Lazy-loaded the mobile sheet (Radix Dialog) | JS 176 kB to 171 kB |
-| Replaced three Radix accordions with native `<details>` | JS 171 kB to 169 kB, and it now works with scripting disabled |
-| Replaced Radix NavigationMenu with a disclosure | JS 169 kB to 159 kB |
-| Split `/transactions` into two static routes | removed Radix Tabs and the last dynamic render |
-| Removed the `<video poster>` duplicating the hero still | 60 kB per load |
-| Shrank the footer roundel from a 180px PNG, made it lazy | 30 kB per load |
+| Change                                                   | Effect                                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------- |
+| Dropped Newsreader's unused italic                       | fonts 360 kB to 163 kB                                        |
+| Dropped Archivo's unused `wdth` axis                     | included above                                                |
+| Dropped Newsreader's `opsz` axis                         | fonts 163 kB to 91 kB; mobile 91 to 93                        |
+| Lazy-loaded the mobile sheet (Radix Dialog)              | JS 176 kB to 171 kB                                           |
+| Replaced three Radix accordions with native `<details>`  | JS 171 kB to 169 kB, and it now works with scripting disabled |
+| Replaced Radix NavigationMenu with a disclosure          | JS 169 kB to 159 kB                                           |
+| Split `/transactions` into two static routes             | removed Radix Tabs and the last dynamic render                |
+| Removed the `<video poster>` duplicating the hero still  | 60 kB per load                                                |
+| Shrank the footer roundel from a 180px PNG, made it lazy | 30 kB per load                                                |
 
 **The experiment that failed.** Fonts were un-preloaded on the theory that 163 kB at high priority
 was starving the LCP image. Measured: first contentful paint went from 0.9s to **2.0s** and CLS from

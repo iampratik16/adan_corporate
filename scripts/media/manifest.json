@@ -17,9 +17,7 @@
       "location": "global",
       "prompt": "The same stone and glass lobby at dawn in a tall vertical crop. Raking early light across pale limestone, one anonymous figure in a dark overcoat crossing in soft motion blur, full-height glazing with slender vertical mullions, deep shadow at the top of frame. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "9:16",
           "imageSize": "2K"
@@ -37,9 +35,7 @@
       "location": "global",
       "prompt": "The same stone and glass lobby at dawn in a tall vertical crop. Raking early light across pale limestone, one anonymous figure in a dark overcoat crossing in soft motion blur, full-height glazing with slender vertical mullions, deep shadow at the top of frame. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "9:16",
           "imageSize": "2K"
@@ -57,9 +53,7 @@
       "location": "global",
       "prompt": "Looking along a long stone facade in early light, where a modern glass extension meets the older masonry in a clean vertical joint. Sharp perspective down the wall, the stone warm and the glass cool, a narrow band of sky above. No people. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -77,9 +71,7 @@
       "location": "global",
       "prompt": "Looking along a long stone facade in early light, where a modern glass extension meets the older masonry in a clean vertical joint. Sharp perspective down the wall, the stone warm and the glass cool, a narrow band of sky above. No people. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -97,9 +89,7 @@
       "location": "global",
       "prompt": "Two office buildings joined high above the street by an enclosed glass footbridge, seen from the pavement at blue hour looking up. The bridge is lit softly from within; the two buildings read as distinct masses either side of it. Strong verticals, deep blue sky, wet road below. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -117,9 +107,7 @@
       "location": "global",
       "prompt": "Two office buildings joined high above the street by an enclosed glass footbridge, seen from the pavement at blue hour looking up. The bridge is lit softly from within; the two buildings read as distinct masses either side of it. Strong verticals, deep blue sky, wet road below. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -137,9 +125,7 @@
       "location": "global",
       "prompt": "An empty boardroom at first light. A long solid timber table runs away from camera, its chairs pushed back and left slightly askew as though a meeting has just broken up. One glass of water and a closed notebook remain. Beyond a full-height window the city is soft and out of focus in the early haze. Nobody is present. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -157,9 +143,7 @@
       "location": "global",
       "prompt": "An empty boardroom at first light. A long solid timber table runs away from camera, its chairs pushed back and left slightly askew as though a meeting has just broken up. One glass of water and a closed notebook remain. Beyond a full-height window the city is soft and out of focus in the early haze. Nobody is present. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -177,9 +161,7 @@
       "location": "global",
       "prompt": "A close architectural study of precise structural steel meeting stone: a repeating rhythm of machined steel brackets, bolts and shadow gaps against a honed stone wall. Flat even light, shallow depth of field falling away along the repeat. Entirely abstract, no people. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -197,9 +179,7 @@
       "location": "global",
       "prompt": "A close architectural study of precise structural steel meeting stone: a repeating rhythm of machined steel brackets, bolts and shadow gaps against a honed stone wall. Flat even light, shallow depth of field falling away along the repeat. Entirely abstract, no people. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -217,9 +197,7 @@
       "location": "global",
       "prompt": "A tall window at blue hour, beaded with rain on the inside of the glass. Beyond it a harbour city is reduced entirely to soft circular bokeh: cool blue lights, one or two warm amber ones. The beads of water are the only thing in focus. Nothing is identifiable. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -237,9 +215,7 @@
       "location": "global",
       "prompt": "A tall window at blue hour, beaded with rain on the inside of the glass. Beyond it a harbour city is reduced entirely to soft circular bokeh: cool blue lights, one or two warm amber ones. The beads of water are the only thing in focus. Nothing is identifiable. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -257,9 +233,7 @@
       "location": "global",
       "prompt": "A quiet financial district street just after sunrise, shot along the pavement. Tall stone and glass buildings recede on both sides; long shadows across wet paving. One distant figure walks away from camera in soft motion blur, small in frame and unidentifiable. The street is otherwise empty. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -277,9 +251,7 @@
       "location": "global",
       "prompt": "A quiet financial district street just after sunrise, shot along the pavement. Tall stone and glass buildings recede on both sides; long shadows across wet paving. One distant figure walks away from camera in soft motion blur, small in frame and unidentifiable. The street is otherwise empty. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "3:2",
           "imageSize": "2K"
@@ -297,9 +269,7 @@
       "location": "global",
       "prompt": "A heavy timber door standing ajar onto a bright corridor. Warm daylight spills through the opening and lies in a long shape across a pale stone floor. The near side of the door is in deep shadow. Nobody is present. Quiet, still and inviting. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "16:9",
           "imageSize": "2K"
@@ -317,9 +287,7 @@
       "location": "global",
       "prompt": "A heavy timber door standing ajar onto a bright corridor. Warm daylight spills through the opening and lies in a long shape across a pale stone floor. The near side of the door is in deep shadow. Nobody is present. Quiet, still and inviting. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "16:9",
           "imageSize": "2K"
@@ -337,9 +305,7 @@
       "location": "global",
       "prompt": "A macro material study, filling the frame: honed pale limestone, a single shallow saw mark catching raking light. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "1:1",
           "imageSize": "2K"
@@ -357,9 +323,7 @@
       "location": "global",
       "prompt": "A macro material study, filling the frame: brushed solid brass, fine unidirectional grain, slightly tarnished at one edge. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "1:1",
           "imageSize": "2K"
@@ -377,9 +341,7 @@
       "location": "global",
       "prompt": "A macro material study, filling the frame: fluted cast glass, vertical ribs, a cool blue interior blurred behind it. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "1:1",
           "imageSize": "2K"
@@ -397,9 +359,7 @@
       "location": "global",
       "prompt": "A macro material study, filling the frame: dark quarter-sawn oak, close open grain, a soft satin finish. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "1:1",
           "imageSize": "2K"
@@ -417,9 +377,7 @@
       "location": "global",
       "prompt": "A macro material study, filling the frame: woven charcoal wool suiting cloth, a faint twill diagonal. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "1:1",
           "imageSize": "2K"
@@ -437,9 +395,7 @@
       "location": "global",
       "prompt": "A macro material study, filling the frame: blued rolled steel plate, a faint mottled heat patina, one machined edge. Absolutely flat-on, no objects, no context, no depth cues beyond the surface itself. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "1:1",
           "imageSize": "2K"
@@ -537,9 +493,7 @@
       "location": "global",
       "prompt": "A tall contemporary door of dark oak with a slim vertical brass pull, standing ajar onto a bright modern office corridor beyond. Warm daylight from a full-height window at the far end spills through the opening and lies in a long shape across a pale honed limestone floor. The near side of the door and the wall around it are in deep shadow. The corridor beyond is plain, modern and softly out of focus: flat plastered walls, a recessed ceiling, no ornament, no arches, no stonework, nothing historic. Nobody is present. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "16:9",
           "imageSize": "2K"
@@ -557,9 +511,7 @@
       "location": "global",
       "prompt": "A tall contemporary door of dark oak with a slim vertical brass pull, standing ajar onto a bright modern office corridor beyond. Warm daylight from a full-height window at the far end spills through the opening and lies in a long shape across a pale honed limestone floor. The near side of the door and the wall around it are in deep shadow. The corridor beyond is plain, modern and softly out of focus: flat plastered walls, a recessed ceiling, no ornament, no arches, no stonework, nothing historic. Nobody is present. Full-frame cinema camera, 40mm lens, natural available light at dawn or blue hour, muted palette of deep blue-black shadows, cool stone greys and occasional warm brass highlights, soft contrast, fine film grain, shallow depth of field, architectural composition with strong verticals, calm and unposed. No text, no signage, no logos, no recognisable landmarks, no faces in focus, no lens flare, no HDR look, no neon, no futuristic interfaces.",
       "parameters": {
-        "responseModalities": [
-          "IMAGE"
-        ],
+        "responseModalities": ["IMAGE"],
         "imageConfig": {
           "aspectRatio": "16:9",
           "imageSize": "2K"

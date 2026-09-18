@@ -12,7 +12,7 @@
  */
 import sharp from 'sharp';
 import { execFile } from 'node:child_process';
-import { mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, stat, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -227,7 +227,11 @@ async function main(): Promise<void> {
     if (!existsSync(path.join(OUT, `${shot.id}-${firstWidth}.avif`))) continue;
 
     const meta = await sharp(source).metadata();
-    const placeholder = await grade(sharp(source)).resize(20).blur(1.2).webp({ quality: 28 }).toBuffer();
+    const placeholder = await grade(sharp(source))
+      .resize(20)
+      .blur(1.2)
+      .webp({ quality: 28 })
+      .toBuffer();
     emitted[shot.id] = {
       widths: shot.widths.filter((w) => existsSync(path.join(OUT, `${shot.id}-${w}.avif`))),
       blurDataURL: `data:image/webp;base64,${placeholder.toString('base64')}`,

@@ -42,13 +42,17 @@ export function HeroFilm({ sources }: { sources: { landscape: string[]; portrait
 
     if (reduced || thin) return;
 
-    setPortrait(
-      window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches &&
-        sources.portrait.length > 0,
-    );
-
     // Wait for the poster to have painted before asking for 1.5 MB of film.
-    const start = () => setMounted(true);
+    // Orientation is decided at the same moment the element mounts, so no file
+    // is ever fetched for the wrong crop and no state is set during the effect
+    // body itself, which would cascade a render.
+    const start = () => {
+      setPortrait(
+        window.matchMedia('(orientation: portrait) and (max-width: 820px)').matches &&
+          sources.portrait.length > 0,
+      );
+      setMounted(true);
+    };
     if (typeof window.requestIdleCallback === 'function') {
       const handle = window.requestIdleCallback(start, { timeout: 2000 });
       return () => window.cancelIdleCallback(handle);

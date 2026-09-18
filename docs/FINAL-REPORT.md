@@ -10,17 +10,17 @@ recorded.
 
 Seventeen route patterns, every one prerendered as static HTML.
 
-| Route | Records |
-|---|---|
-| `/` | The homepage: film hero, figures, expertise index, AI band, transaction rail, network globe, people, insights, contact |
-| `/expertise` + five pillar pages | 5 pillars, 21 capability groups, 5 "how we work" sequences |
-| `/transactions` | 36 completed transactions, filterable by pillar, sector, region and size |
-| `/transactions/mandates` | 31 current mandates, with a placeholder disclaimer notice |
-| `/people` + 32 profiles | Filterable by role, location and expertise, with name search |
-| `/about` | Firm, values, the Adan advantage, network, 14 offices |
-| `/insights`, `/podcast`, `/careers`, `/contact` | Library, channel, partnership route, enquiry router |
-| `/legal/[slug]` | 6 policies, carried over verbatim |
-| `sitemap.xml`, `robots.txt`, 404, OG images | Generated from `content/`, never hand-listed |
+| Route                                           | Records                                                                                                                |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `/`                                             | The homepage: film hero, figures, expertise index, AI band, transaction rail, network globe, people, insights, contact |
+| `/expertise` + five pillar pages                | 5 pillars, 21 capability groups, 5 "how we work" sequences                                                             |
+| `/transactions`                                 | 36 completed transactions, filterable by pillar, sector, region and size                                               |
+| `/transactions/mandates`                        | 31 current mandates, with a placeholder disclaimer notice                                                              |
+| `/people` + 32 profiles                         | Filterable by role, location and expertise, with name search                                                           |
+| `/about`                                        | Firm, values, the Adan advantage, network, 14 offices                                                                  |
+| `/insights`, `/podcast`, `/careers`, `/contact` | Library, channel, partnership route, enquiry router                                                                    |
+| `/legal/[slug]`                                 | 6 policies, carried over verbatim                                                                                      |
+| `sitemap.xml`, `robots.txt`, 404, OG images     | Generated from `content/`, never hand-listed                                                                           |
 
 Plus 207 permanent redirects covering every URL in the old sitemap (176) and every team profile (29).
 `vcard` route handlers on all 32 profiles.
@@ -31,32 +31,32 @@ Plus 207 permanent redirects covering every URL in the old sitemap (176) and eve
 
 ### Lighthouse
 
-| | Performance | Accessibility | Best practices | SEO |
-|---|---|---|---|---|
-| **Desktop, `/`** | **100** | **100** | **100** | **100** |
-| Mobile, `/` | 94 | 100 | 100 | 100 |
-| Mobile, `/transactions` | 99 | 100 | 100 | 100 |
-| Mobile, `/about` | 98 | 100 | 100 | 100 |
-| Mobile, `/contact` | 98 | 100 | 100 | 100 |
-| Mobile, `/people` | 93 | 100 | 100 | 100 |
-| Mobile, pillar page | 91 | 100 | 100 | 100 |
+|                         | Performance | Accessibility | Best practices | SEO     |
+| ----------------------- | ----------- | ------------- | -------------- | ------- |
+| **Desktop, `/`**        | **100**     | **100**       | **100**        | **100** |
+| Mobile, `/`             | 94          | 100           | 100            | 100     |
+| Mobile, `/transactions` | 99          | 100           | 100            | 100     |
+| Mobile, `/about`        | 98          | 100           | 100            | 100     |
+| Mobile, `/contact`      | 98          | 100           | 100            | 100     |
+| Mobile, `/people`       | 93          | 100           | 100            | 100     |
+| Mobile, pillar page     | 91          | 100           | 100            | 100     |
 
 Mobile figures are Lighthouse's simulated 4G with a 4x CPU slowdown.
 
 ### Against the brief's budgets
 
-| Budget | Target | Result |
-|---|---|---|
-| Homepage JavaScript | under ~170 kB | **159 kB**; worst route 160.7 kB |
-| CLS | under 0.05 | **0** on every route |
-| INP proxy (total blocking time) | under 200ms | **10 to 30ms** |
-| Lighthouse a11y / best practices / SEO | 95+ | **100** on every route |
-| Lighthouse mobile performance | 90+ | **91 to 99** |
-| LCP, desktop | under 2.0s | **0.7s** |
-| LCP, mobile | under 2.0s | **2.3s to 3.5s** — see below |
-| Film | 3 MB desktop, 1.5 MB mobile | hero **0.52 MB** / **0.22 MB** |
-| WCAG | 2.2 AA | 0 axe violations on 17 routes across 4 engines |
-| No horizontal scroll at 320px | required | verified on every route |
+| Budget                                 | Target                      | Result                                         |
+| -------------------------------------- | --------------------------- | ---------------------------------------------- |
+| Homepage JavaScript                    | under ~170 kB               | **159 kB**; worst route 160.7 kB               |
+| CLS                                    | under 0.05                  | **0** on every route                           |
+| INP proxy (total blocking time)        | under 200ms                 | **10 to 30ms**                                 |
+| Lighthouse a11y / best practices / SEO | 95+                         | **100** on every route                         |
+| Lighthouse mobile performance          | 90+                         | **91 to 99**                                   |
+| LCP, desktop                           | under 2.0s                  | **0.7s**                                       |
+| LCP, mobile                            | under 2.0s                  | **2.3s to 3.5s** — see below                   |
+| Film                                   | 3 MB desktop, 1.5 MB mobile | hero **0.52 MB** / **0.22 MB**                 |
+| WCAG                                   | 2.2 AA                      | 0 axe violations on 17 routes across 4 engines |
+| No horizontal scroll at 320px          | required                    | verified on every route                        |
 
 **Total first-load weight** runs from 276 kB (`/careers`) to 412 kB (a pillar page), of which
 91 kB is fonts and 159 kB is JavaScript.
@@ -65,7 +65,7 @@ Mobile figures are Lighthouse's simulated 4G with a 4x CPU slowdown.
 
 **Mobile LCP is 2.3s to 3.5s against a 2.0s target.** Three points on it:
 
-1. It is a *simulated* figure. The observed LCP on an unthrottled mobile emulation is about 150ms,
+1. It is a _simulated_ figure. The observed LCP on an unthrottled mobile emulation is about 150ms,
    and no network request finishes after 2s. Lighthouse replays the byte cost over a modelled
    1.6 Mbps link.
 2. **The LCP element is the masthead logo, not the hero poster.** Chrome excludes a full-viewport
@@ -122,15 +122,15 @@ near-identical silhouettes.
 
 ## Content
 
-| | |
-|---|---|
-| People | 32 (3 without a photograph) |
-| Completed transactions | 36 |
-| Current mandates | 31 |
-| Offices | 14, plus 6 partner cities |
-| Pillars | 5, with 21 capability groups |
-| Insights | 13 |
-| Published figures | 7, of which **5 need partner confirmation** |
+|                        |                                             |
+| ---------------------- | ------------------------------------------- |
+| People                 | 32 (3 without a photograph)                 |
+| Completed transactions | 36                                          |
+| Current mandates       | 31                                          |
+| Offices                | 14, plus 6 partner cities                   |
+| Pillars                | 5, with 21 capability groups                |
+| Insights               | 13                                          |
+| Published figures      | 7, of which **5 need partner confirmation** |
 
 Everything is typed and Zod-validated at import, so a malformed record fails the build rather than
 rendering an empty card.
@@ -161,14 +161,14 @@ Four things, all in `docs/CLIENT-QUESTIONS.md`:
 
 Every one is visible and marked, none is silent.
 
-| Where | What |
-|---|---|
-| Footer, every page | The regulatory and company line |
-| Homepage figure row | "As at [date to be confirmed by the client]" |
-| `/transactions/mandates` | A marked notice that the mandates' currency is unconfirmed |
-| Three people | Monogram tiles instead of photographs |
-| Several profiles | No expertise tags, where the source's tags were copy-pasted from another partner and contradicted the person's own biography |
-| Almaty office | No phone and no address: the source's are Baku's |
+| Where                    | What                                                                                                                         |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Footer, every page       | The regulatory and company line                                                                                              |
+| Homepage figure row      | "As at [date to be confirmed by the client]"                                                                                 |
+| `/transactions/mandates` | A marked notice that the mandates' currency is unconfirmed                                                                   |
+| Three people             | Monogram tiles instead of photographs                                                                                        |
+| Several profiles         | No expertise tags, where the source's tags were copy-pasted from another partner and contradicted the person's own biography |
+| Almaty office            | No phone and no address: the source's are Baku's                                                                             |
 
 In development, any figure with `needsConfirmation` also renders a visible "Unconfirmed" marker.
 
@@ -176,18 +176,18 @@ In development, any figure with `needsConfirmation` also renders a visible "Unco
 
 ## Handover
 
-| Document | What it is |
-|---|---|
-| `README.md` | Run, environment, deploy, regenerate media |
-| `CLAUDE.md` | The working brief for anyone editing this codebase |
-| `docs/DECISIONS.md` | Every call made without the client, with the reason and the measurement |
-| `docs/CLIENT-QUESTIONS.md` | Everything the site could not resolve, ranked by how much it blocks |
-| `docs/COPY-DRAFT.md` | Every word written for this site, for partner review |
-| `docs/design-direction.md` | Tokens, type scale, grid, motion, wireframes, and a critique against the brief |
-| `scripts/media/manifest.json` | Every generation call: model, prompt, parameters, timestamp, kept |
-| `content/redirects.ts` | 207 permanent redirects |
-| `content/_source/` | The evidence behind every fact on the site |
-| `.review/` | Every route at 390, 768, 1440 and 1920 |
+| Document                      | What it is                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| `README.md`                   | Run, environment, deploy, regenerate media                                     |
+| `CLAUDE.md`                   | The working brief for anyone editing this codebase                             |
+| `docs/DECISIONS.md`           | Every call made without the client, with the reason and the measurement        |
+| `docs/CLIENT-QUESTIONS.md`    | Everything the site could not resolve, ranked by how much it blocks            |
+| `docs/COPY-DRAFT.md`          | Every word written for this site, for partner review                           |
+| `docs/design-direction.md`    | Tokens, type scale, grid, motion, wireframes, and a critique against the brief |
+| `scripts/media/manifest.json` | Every generation call: model, prompt, parameters, timestamp, kept              |
+| `content/redirects.ts`        | 207 permanent redirects                                                        |
+| `content/_source/`            | The evidence behind every fact on the site                                     |
+| `.review/`                    | Every route at 390, 768, 1440 and 1920                                         |
 
 ### Departures from the brief
 

@@ -103,9 +103,7 @@ export default function HomePage() {
           widths: heroMedia.widths,
         }}
         portraitPoster={
-          media['hero-still-portrait']
-            ? { widths: media['hero-still-portrait'].widths }
-            : undefined
+          media['hero-still-portrait'] ? { widths: media['hero-still-portrait'].widths } : undefined
         }
         blurDataURL={heroMedia.blurDataURL}
         film={{

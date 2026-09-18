@@ -121,12 +121,20 @@ export default async function PersonPage({ params }: { params: Promise<{ slug: s
 
           <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-4" data-profile-portrait>
-              <div style={{ viewTransitionName: `portrait-${person.slug}` }}>
-                <Portrait
-                  person={person}
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
-                  priority
-                />
+              {/*
+                Capped at 260px on purpose. The only source images that exist
+                are the old site's circular avatars, and the usable 4:5 crop
+                inside them is 140 to 407px wide, median 216. Printing one at
+                400px would be showing an upscale and calling it a portrait, so
+                the portrait stays small and the whitespace around it does the
+                work. A proper shoot is the fix, and it is the first item under
+                Photography in docs/CLIENT-QUESTIONS.md.
+              */}
+              <div
+                className="w-full max-w-[260px]"
+                style={{ viewTransitionName: `portrait-${person.slug}` }}
+              >
+                <Portrait person={person} sizes="260px" priority />
               </div>
             </div>
 
