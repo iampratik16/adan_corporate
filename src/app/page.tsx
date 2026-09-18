@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { figures } from '@content/figures';
 import { insights } from '@content/insights';
+import { heroFilm } from '@content/hero-film';
 import { media } from '@content/media';
 import { offices, partnerCities } from '@content/offices';
 import { people } from '@content/people';
-import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { pillars } from '@content/pillars';
@@ -39,57 +39,30 @@ export const metadata: Metadata = {
  * WebKit answers `canPlayType('video/webm; codecs="vp9"')` with "probably",
  * commits to the WebM, reaches readyState 1 with the metadata parsed, and then
  * never plays a frame. It does not error, so `onError` never fires and nothing
- * falls back. The hero simply sat on its poster, for ever, on Safari. Measured:
- * the same 1280 MP4 in the same engine reaches readyState 4 and plays.
+ * falls back. The hero simply sat on its poster, for ever, on Safari.
  *
  * Once the MP4 is listed first, every browser takes it and the WebM is never
- * selected by anything, so it is not built or shipped at all. It saved about
- * 0.8 MB on the largest rung and cost an entire browser engine.
+ * selected by anything, so it is not built or shipped at all.
  *
- * The full film is an optional tier. Until it has been assembled, the hero
- * simply loops its opening shot, which is what most visitors see anyway.
+ * WHICH RUNGS EXIST IS READ FROM content/hero-film.ts, NOT PROBED.
  *
- * Each rung is checked on its own, and the check reads the file's DURATION, not
- * just its name. Two ways this gate has been wrong before:
+ * This used to call `ffprobe` through `execFileSync`, once per rung, to check
+ * each file's duration at build time. It worked locally and failed silently
+ * everywhere else: Vercel's build image has no ffmpeg, the call threw, and the
+ * catch dropped every rung. The deploy shipped the poster and no `<video>` at
+ * all, while the mp4 files sat on the CDN answering 200 to anyone who asked for
+ * them directly, and nothing in the build log mentioned it.
  *
- *   1. It tested only that `hero-film-1920.mp4` existed. That name was already
- *      occupied by the original single 8-second clip, so the gate passed and
- *      the hero served eight seconds as though it were sixty. A filename
- *      existing is not evidence that the thing exists.
- *   2. It probed the 1920 mp4 and spoke for all four files. When an interrupted
- *      encode left that one file truncated, the gate withdrew the whole tier,
- *      including a 1280 pair that decoded perfectly.
- *
- * A file that fails to probe is dropped from its own list and nothing else.
- *
- * The threshold is 10 seconds, not 30. It was 30 to catch a file that was
- * really the 8-second loop wearing the film's name. The film is now a 13.8s
- * cut, so 30 would have rejected the real thing and served the loop for ever;
- * 10 still catches the case it was written for.
+ * The manifest is written by scripts/media/assemble-hero.ts, which is the only
+ * thing that knows what it built. `existsSync` is kept as a cheap sanity check
+ * because the file could be deleted after assembly, but nothing here shells out
+ * and nothing depends on a binary being installed.
  */
 function rung(width: number): string[] {
-  return (['mp4'] as const)
-    .map((ext) => `hero-film-${width}.${ext}`)
-    .filter((name) => {
-      const file = path.join(process.cwd(), 'public/media', name);
-      if (!existsSync(file)) return false;
-      try {
-        return (
-          Number(
-            execFileSync(
-              'ffprobe',
-              ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', file],
-              { encoding: 'utf8' },
-            ).trim(),
-          ) >= 10
-        );
-      } catch {
-        // Either no ffprobe at build time or the file will not demux. Both mean
-        // the same thing here: do not offer this file to a browser.
-        return false;
-      }
-    })
-    .map((name) => versioned(`/media/${name}`));
+  const name = `hero-film-${width}.mp4`;
+  if (!heroFilm.rungs.includes(name as (typeof heroFilm.rungs)[number])) return [];
+  if (!existsSync(path.join(process.cwd(), 'public/media', name))) return [];
+  return [versioned(`/media/${name}`)];
 }
 
 const FULL_FILM = rung(1920);

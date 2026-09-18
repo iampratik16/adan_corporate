@@ -865,3 +865,44 @@ Measured after, three consecutive WebKit runs and one each of the others:
 
 `tests/resilience.spec.ts` now asserts that a `saveData` + `3g` client at a 1920 viewport gets a
 playing film **and** gets the 1280 rung, which is the exact combination that was broken.
+
+## 33. The build-time ffprobe gate broke the deploy
+
+The hero played on localhost and shipped as a poster with no `<video>` at all on Vercel.
+
+`src/app/page.tsx` answered "is there a film?" by calling `ffprobe` through `execFileSync` at build
+time, once per rung, to read each file's duration. Vercel's build image has no ffmpeg, the call
+threw, and the `catch` returned false for every candidate:
+
+```
+} catch {
+  // Either no ffprobe at build time or the file will not demux. Both mean
+  // the same thing here: do not offer this file to a browser.
+  return false;
+}
+```
+
+That comment is correct about what it does and wrong about what it should do. **"ffprobe is missing"
+and "this file is corrupt" are not the same question**, and conflating them meant a machine without
+ffmpeg could never serve the film. Nothing in the build log mentioned it, the deploy succeeded, and
+the mp4 files were on the CDN the whole time answering 200 to anyone who asked for them directly.
+
+`scripts/media/assemble-hero.ts` now writes `content/hero-film.ts` with the duration and the rungs
+it actually produced, and the page reads that. It is the only thing that knows what it built, it
+already had the number, and a generated content file is a static read with no external binary and no
+catch to swallow. `existsSync` is kept as a cheap check, because a file can be deleted after
+assembly; nothing shells out.
+
+**Verified by building with ffmpeg off `PATH`**, which is the condition that was failing:
+
+|                         | before           | after                                      |
+| ----------------------- | ---------------- | ------------------------------------------ |
+| rungs in the built HTML | none             | `hero-film-1920.mp4`, `hero-film-1280.mp4` |
+| chromium                | no video element | plays at 473ms                             |
+| webkit                  | no video element | plays at 1992ms                            |
+| firefox                 | no video element | plays at 617ms                             |
+
+**The wider lesson, third time in this log.** Every hero failure so far has been invisible from the
+server: the immutable cache in section 27, the connection gates in section 32, and this. In each
+case the bytes were correct and reachable and the page simply did not ask for them. A build that
+cannot produce the film should say so out loud rather than quietly produce a page without one.

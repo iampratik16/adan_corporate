@@ -8,13 +8,13 @@ export interface MediaAsset {
 }
 
 export const media: Record<string, MediaAsset> = {
-  statement: {
-    widths: [640, 960, 1280],
+  'hero-poster': {
+    widths: [640, 960, 1280, 1920],
     blurDataURL:
-      'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQBACdASoUAA0APxl2s1CspySisAgBkCMJYwC7AB33WOiZRhcoODmrAAD+ZgqDWjUS8DCW0CK89JDay/Jw1LtO0SUzIA8CW3g9j4AA',
-    width: 2528,
-    height: 1696,
-    aspectRatio: '2528 / 1696',
+      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAwCdASoUAAsAPxl0sVCspqSisAgBkCMJZwDLLCHcb5GuoQL1gAAA9940bP3uz2tF/okWjMoDlaoVCU6BAAAA',
+    width: 1920,
+    height: 1080,
+    aspectRatio: '1920 / 1080',
   },
   'hero-still': {
     widths: [640, 960, 1280, 1920, 2560],
@@ -23,14 +23,6 @@ export const media: Record<string, MediaAsset> = {
     width: 2752,
     height: 1536,
     aspectRatio: '2752 / 1536',
-  },
-  'hero-poster': {
-    widths: [640, 960, 1280, 1920],
-    blurDataURL:
-      'data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAwCdASoUAAsAPxl0sVCspqSisAgBkCMJZwDLLCHcb5GuoQL1gAAA9940bP3uz2tF/okWjMoDlaoVCU6BAAAA',
-    width: 1920,
-    height: 1080,
-    aspectRatio: '1920 / 1080',
   },
   'pillar-corporate-finance': {
     widths: [640, 960, 1280, 1920],
@@ -119,6 +111,14 @@ export const media: Record<string, MediaAsset> = {
     width: 2048,
     height: 2048,
     aspectRatio: '2048 / 2048',
+  },
+  statement: {
+    widths: [640, 960, 1280],
+    blurDataURL:
+      'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQBACdASoUAA0APxl2s1CspySisAgBkCMJYwC7AB33WOiZRhcoODmrAAD+ZgqDWjUS8DCW0CK89JDay/Jw1LtO0SUzIA8CW3g9j4AA',
+    width: 2528,
+    height: 1696,
+    aspectRatio: '2528 / 1696',
   },
   'insight-career': {
     widths: [640, 960, 1280],
