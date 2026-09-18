@@ -45,51 +45,49 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
   const [failed, setFailed] = useState(false);
 
   /**
-   * The client asked us not to move anything, or not to spend their data.
+   * NOTHING WITHHOLDS THE FILM ANY MORE. It plays on load, always.
    *
-   * Not the same as `paused`, which is a choice about this film. This is a
-   * standing preference about the whole machine, so nothing is fetched and no
-   * `<video>` is mounted until the reader explicitly asks for one.
+   * It used to be withheld on three signals, and every one of them mounted no
+   * `<video>` at all, so the hero was a still with nothing on screen to say why:
+   *
+   *   prefers-reduced-motion   removed in section 28
+   *   navigator.connection.saveData
+   *   effectiveType 2g or 3g
+   *
+   * The last two are why it was still not playing after section 28. Chrome
+   * derives `effectiveType` from observed round-trip time, not from the kind of
+   * link you are on, so it reports `3g` on congested wifi, behind a VPN, or on a
+   * loaded machine. Measured against the running page: saveData, 3g and slow-2g
+   * each produced `videos=0`. With the pause control now `sr-only`, there was no
+   * longer even a button to hint that a film existed.
+   *
+   * Asked for four times. The connection signals are not thrown away, they are
+   * demoted to picking the rung: a metered or slow client gets the 1.17 MB cut
+   * rather than the 3.41 MB one. That is the whole of what is left of the
+   * data-saving intent, and it is honest about the trade. See section 32.
    */
-  const [withheld, setWithheld] = useState(false);
-
-  /** Runnable twice: once on load, where it may withhold, and again on consent. */
   const decide = useCallback(() => {
-    // 1920 is roughly three times the bytes of 1280, and below a 1600px
-    // viewport it is downscaled on arrival, so it is used above that only.
-    setSrcs(window.innerWidth >= 1600 ? sources.full : sources.fullNarrow);
-  }, [sources.full, sources.fullNarrow]);
-
-  useEffect(() => {
     const connection = (
       navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
     ).connection;
-    const saveData = connection?.saveData === true;
-    const slow =
-      connection?.effectiveType !== undefined && /(^|-)[23]g$/.test(connection.effectiveType);
+    const thrifty =
+      connection?.saveData === true ||
+      (connection?.effectiveType !== undefined && /(^|-)[23]g$/.test(connection.effectiveType));
 
+    // 1920 is roughly three times the bytes of 1280, and below a 1600px
+    // viewport it is downscaled on arrival, so it is used above that only, and
+    // never on a client that has asked to be careful with data.
+    const wide = window.innerWidth >= 1600 && !thrifty;
+    setSrcs(wide ? sources.full : sources.fullNarrow);
+  }, [sources.full, sources.fullNarrow]);
+
+  useEffect(() => {
     // One frame, not an idle callback. This used to wait for
     // requestIdleCallback with a 2000ms timeout, which is what a third tier
     // fetched in the background can afford and what a film that is the hero
     // cannot. A frame is enough to keep the state out of the effect body, and
     // is imperceptible.
     const start = () => {
-      // REDUCED MOTION NO LONGER WITHHOLDS THE FILM. The client asked three
-      // times for the hero to play on load and twice reported it as broken when
-      // it did not, which is what reduced motion was doing on their machine.
-      // That is their call to make about their own site and it is recorded in
-      // docs/DECISIONS.md section 28, along with what it costs.
-      //
-      // A metered or slow connection still withholds, because that is a
-      // different question: it is about somebody's data bill, not about motion,
-      // and 1.2 MB of video on a 2G link is a cost they did not agree to.
-      if (saveData || slow) {
-        setWithheld(true);
-        setPaused(true);
-        setMounted(true);
-        return;
-      }
-
       decide();
       try {
         setPaused(window.sessionStorage.getItem(PAUSE_KEY) === '1');
@@ -105,12 +103,18 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
 
   /* --- Play when it can, and stop when nobody is looking. ------------------- */
   useEffect(() => {
-    if (!mounted || withheld) return;
+    if (!mounted) return;
     const video = videoRef.current;
     if (!video) return;
 
     let onScreen = true;
     const sync = () => {
+      // Never ask before it can answer. WebKit rejects play() with
+      // NotAllowedError when it is called at readyState 0, and once it has
+      // refused an element it goes on refusing it: the element ends up needing
+      // a user gesture it is never going to get, and the film sits at frame one
+      // on Safari with everything else about it looking correct.
+      if (video.readyState < 2) return;
       if (onScreen && !paused && !document.hidden) void video.play().catch(() => {});
       else video.pause();
     };
@@ -130,19 +134,11 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
       observer.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [mounted, withheld, paused, ready]);
+  }, [mounted, paused, ready]);
 
   const toggle = () => {
     const next = !paused;
     setPaused(next);
-
-    // Pressing play is the consent a withheld film was waiting for. The sizing
-    // decision runs now, because on load we deliberately did not make one.
-    if (!next && withheld) {
-      setWithheld(false);
-      decide();
-    }
-
     try {
       window.sessionStorage.setItem(PAUSE_KEY, next ? '1' : '0');
     } catch {
@@ -154,9 +150,18 @@ export function HeroFilm({ sources }: { sources: FilmSources }) {
 
   return (
     <>
-      {mounted && !withheld && srcs.length > 0 && (
+      {mounted && srcs.length > 0 && (
         <video
-          ref={videoRef}
+          ref={(el) => {
+            videoRef.current = el;
+            // `muted` is set here as well as declared above, and it has to be.
+            // React assigns it as a PROPERTY and never writes the attribute,
+            // and autoplay eligibility is decided from the attribute at the
+            // moment the element is inserted. On a client-mounted <video> that
+            // ordering is not guaranteed, and a browser that has already
+            // decided the element is unmuted will refuse to start it.
+            if (el) el.muted = true;
+          }}
           muted
           loop
           autoPlay

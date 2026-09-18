@@ -815,3 +815,53 @@ render would put the ring back in four corners, which is exactly the bug section
 about a person. Both are still on the profile the card links to, and `LocalTime` still runs in the
 network band and on the contact page, where a reader is deciding whether it is a reasonable hour to
 call.
+
+## 32. Nothing withholds the hero film any more
+
+Reported four times as the hero not playing on load. Section 28 removed the reduced-motion gate and
+it still did not play, because two more were left behind.
+
+`navigator.connection.saveData` and an `effectiveType` of `2g` or `3g` each mounted **no `<video>`
+at all**. Measured against the running page:
+
+| client                   | before               | after            |
+| ------------------------ | -------------------- | ---------------- |
+| plain                    | plays                | plays, 1920 rung |
+| `saveData: true`         | **no video element** | plays, 1280 rung |
+| `effectiveType: 3g`      | **no video element** | plays, 1280 rung |
+| `effectiveType: slow-2g` | **no video element** | plays, 1280 rung |
+| no connection API        | plays                | plays, 1920 rung |
+
+**`effectiveType` is not the kind of link you are on.** Chrome derives it from observed round-trip
+time, so it reports `3g` on congested wifi, behind a VPN, or on a machine under load. Gating a hero
+on it means the hero disappears for reasons that have nothing to do with the reader's connection
+type. And with the pause control now `sr-only` per section 28, there was not even a button left to
+suggest a film existed.
+
+The signals are not thrown away, they are demoted to picking the rung: a metered or slow client gets
+the 1.17 MB cut instead of the 3.41 MB one, at any viewport width. That is the whole of what is left
+of the data-saving intent and it is honest about the trade — **something is now always fetched**.
+
+### WebKit refused to autoplay, and it was two things
+
+With the gates gone, Safari still sat at frame one. `play()` was rejecting with `NotAllowedError`
+on a video that reported `muted: true`, `autoplay: true`, `readyState: 4`, `opacity: 1`.
+
+1. **React never writes the `muted` attribute.** It assigns the property, and autoplay eligibility is
+   decided from the attribute when the element is inserted. On a client-mounted `<video>` that
+   ordering is not guaranteed, and a browser that has already decided the element is unmuted refuses
+   to start it. `muted` is now also set imperatively in the ref callback.
+2. **`sync()` was calling `play()` at `readyState 0`.** WebKit rejects that, and once it has refused
+   an element it goes on refusing: it ends up wanting a user gesture that is never coming. `sync()`
+   now returns early below `readyState 2`.
+
+Measured after, three consecutive WebKit runs and one each of the others:
+
+|          | first frame on screen |
+| -------- | --------------------- |
+| webkit   | 1230ms, 834ms, 827ms  |
+| chromium | 692ms                 |
+| firefox  | 932ms                 |
+
+`tests/resilience.spec.ts` now asserts that a `saveData` + `3g` client at a 1920 viewport gets a
+playing film **and** gets the 1280 rung, which is the exact combination that was broken.

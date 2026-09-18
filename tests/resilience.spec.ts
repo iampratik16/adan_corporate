@@ -67,6 +67,39 @@ test.describe('reduced motion', () => {
     await expect(page.locator('section').first().locator('img').first()).toBeVisible();
   });
 
+  test('a metered or slow connection still gets the film, on the lighter rung', async ({
+    page,
+  }) => {
+    // This is what was still stopping the hero after reduced motion was dealt
+    // with. Chrome derives effectiveType from observed round-trip time rather
+    // than from the kind of link you are on, so it reports 3g on congested
+    // wifi, behind a VPN, or on a loaded machine, and saveData/2g/3g each used
+    // to mount no <video> at all. Now they only pick the rung.
+    await page.addInitScript({
+      content:
+        "Object.defineProperty(navigator,'connection',{get:()=>({saveData:true,effectiveType:'3g'})})",
+    });
+    await page.setViewportSize({ width: 1920, height: 1000 });
+    await page.goto('/');
+
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const v = document.querySelector('section video') as HTMLVideoElement | null;
+            return Boolean(v && !v.paused && v.currentTime > 0);
+          }),
+        { message: 'a data-saving client got no film at all', timeout: 15_000 },
+      )
+      .toBe(true);
+
+    // 1920 wide, so it would take the heavy rung were it not being careful.
+    const src = await page.evaluate(
+      () => (document.querySelector('section video') as HTMLVideoElement).currentSrc,
+    );
+    expect(src, 'a data-saving client was served the heavier rung').toContain('1280');
+  });
+
   test('reduced motion no longer withholds the film', async ({ page }) => {
     // It used to, and the client reported that twice as a broken video before
     // asking three times for the hero to autoplay. Their call, recorded in
